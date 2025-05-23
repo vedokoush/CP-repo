@@ -1,0 +1,1 @@
+{"name":"Local: a","url":"/Users/ookami/Documents/workspaces/repo/a.cpp","tests":[{"id":1748002305669,"input":"1 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/ookami/Documents/workspaces/repo/a.cpp","group":"local","local":true}

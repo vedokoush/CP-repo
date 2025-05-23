@@ -12,23 +12,17 @@ long long Rand(long long l, long long h) {
 
 void GenTest() {
     ofstream cout (NAME ".inp");
-    long long L = Rand(1, 100), n = Rand(1, 10);
-    cout << L << ' ' << n << '\n';
-    for (int i = 1; i <= n; i++) {
-        cout << Rand(0, 50) << ' ' << Rand(1, L) << '\n';
-    }
+    long long a = Rand(1, 100), b = Rand(1, 100);
+    cout << a << ' ' << b << '\n';
 }
 
 int main() {
     srand(time(NULL));
     for (int iTest = 1; iTest <= NTEST; iTest++) {
         GenTest();
-
-        // Run the main solution and the brute-force checker
         system("./a < a.inp > a.out");
         system("./a_trau < a.inp > a.ans");
 
-        // Use diff instead of fc
         if (system("diff a.out a.ans") != 0) {
             cout << "Test " << iTest << ": WRONG!\n";
             return 0;

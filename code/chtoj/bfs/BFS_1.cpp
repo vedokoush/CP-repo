@@ -11,8 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
-
+#define task "BFS_1"
 
 using namespace std;
 const int N = 1e6 + 9;
@@ -20,12 +19,44 @@ const int M = 1e5 + 5;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
 
+int n, m;
+vector<int> adj[N], res;
+int trace[N];
+bool check[N];
+queue<int> q;
+
+void bfs() {
+    q.push(1);
+    check[1] = true;
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        for (auto v : adj[u]) {
+            if (!check[v]) {
+                check[v] = true;
+                trace[v] = u;
+                q.push(v);
+            }
+        }
+    }
+}
 
 void logic() {
     cin >> n >> m;
     for (int i = 1; i <= m; ++i) {
         int u, v; cin >> u >> v;
-        
+        adj[u].pb(v);
+    }
+    bfs();
+    int u = n;
+    while (u > 0) {
+        res.pb(u);
+        u = trace[u];
+    }
+    reverse(all(res));
+    for (auto x : res) {
+        cout << x << ' ';
     }
     // execute;
 }

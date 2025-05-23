@@ -10,41 +10,52 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-// dont copy my flow dude
-#define task ""
-
+#define task "EBOLA"
 
 using namespace std;
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
-const int inf = 1e18;
-const int mod = 1e9 + 7;
+const int N = 1e5 + 5;
 
+int n, k;
+vector<int> adj[N];
+bool visited[N];
+vector<int> f;
+
+void dfs(int u) {
+    visited[u] = true;
+    f.pb(u);
+    for (auto v : adj[u]) {
+        if (!visited[v]) {
+            dfs(v);
+        }
+    }
+}
 
 void logic() {
+    cin >> n >> k;
+    for (int i = 1; i <= n; ++i) {
+        int m; cin >> m;
+        while (m--) {
+            int x; cin >> x;
+            adj[i].pb(x);
+        }
+    }
 
+    dfs(k);
+    sort(all(f));
+    cout << f.size() << '\n';
+    for (auto x : f) {
+        cout << x << ' ';
+    }
     // execute;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
+    cin.tie(NULL); cout.tie(NULL);
     if (fopen(task ".inp", "r")) {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-
     logic();
-
     return 0;
 }
-
-/*
---/shouko\--
-DRAFT:
-
-
-------------
-*/
