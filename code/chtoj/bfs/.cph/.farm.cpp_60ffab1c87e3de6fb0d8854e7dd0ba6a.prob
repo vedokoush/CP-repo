@@ -1,0 +1,1 @@
+{"name":"Local: farm","url":"/Users/ookami/Documents/workspaces/code/chtoj/bfs/farm.cpp","tests":[{"id":1748261733962,"input":"8 8\n.#######\n#..c...#\n#.####.#\n#.#f.#.#\n#.#.c#c#\n#c.##..#\n#.f..f.#\n.######.","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/ookami/Documents/workspaces/code/chtoj/bfs/farm.cpp","group":"local","local":true}

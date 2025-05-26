@@ -1,61 +1,74 @@
 #include <bits/stdc++.h>
-#define int long long
-#define all(v) v.begin(), v.end()
-#define ms(d,x) memset(d, x, sizeof(d))
-#define ii pair<int,int>
-#define iii pair<int,ii>
-#define fi first
-#define se second
-#define pb push_back
-#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
-#define shouko 1
-#define orz shouko
-#define task "EBOLA"
-
 using namespace std;
-const int N = 1e5 + 5;
 
-int n, k;
-vector<int> adj[N];
-bool visited[N];
-vector<int> f;
+#define NAME "EBOLA"
+#define int long long
+const int N = 2 * 1e5 + 5;
+const int INF = 1e9;
 
-void dfs(int u) {
-    visited[u] = true;
-    f.pb(u);
-    for (auto v : adj[u]) {
-        if (!visited[v]) {
-            dfs(v);
+int n, m, dist[N], s, t;
+vector < int > p[N];
+
+void BFS (int start)
+{
+    for (int i = 1; i <= n; i++)
+        dist[i] = INF;
+
+    dist[start] = 0;
+    queue < int > q;
+    q.push (start);
+
+    while (!q.empty ())
+    {
+        int node = q.front ();
+        q.pop ();
+
+        for (auto v : p[node])
+        {
+            if (dist[v] > dist[node] + 1)
+            {
+                dist[v] = dist[node] + 1;
+                q.push (v);
+            }
         }
     }
 }
 
-void logic() {
-    cin >> n >> k;
-    for (int i = 1; i <= n; ++i) {
-        int m; cin >> m;
-        while (m--) {
+void solve()
+{  
+    cin >> n >> s;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> m;
+        for (int j = 1; j <= m; j++)
+        {
             int x; cin >> x;
-            adj[i].pb(x);
+            p[i].push_back (x); 
         }
     }
 
-    dfs(k);
-    sort(all(f));
-    cout << f.size() << '\n';
-    for (auto x : f) {
-        cout << x << ' ';
+    BFS (s);
+    vector < int > ans;
+    for (int i = 1; i <= n; i++)
+    {
+        if (dist[i] != INF) ans.push_back (i);
     }
-    // execute;
+
+    cout << ans.size() << '\n';
+    for (auto i : ans) cout << i << ' ';
+
 }
 
-int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
+int32_t main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    if(fopen(NAME ".inp", "r")){
+        freopen(NAME ".inp", "r", stdin);
+        freopen(NAME ".out", "w", stdout);
     }
-    logic();
-    return 0;
+
+    solve ();
 }
