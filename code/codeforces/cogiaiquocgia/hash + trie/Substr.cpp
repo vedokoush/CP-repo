@@ -10,26 +10,27 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
+// dont copy my flow dude
 #define task ""
+
 
 using namespace std;
 const int N = 1e6 + 9;
-const int baseVal = 256;
-const int mod1 = 1e9 + 7;
-const int mod2 = 1e9 + 9;
+const int M = 1e5 + 5;
+const int inf = 1e18;
+cont int base = 256;
+const int mod = 2e9 + 11;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+int add(int a, int b) {return (a + b) % mod;}
+int mul(int a, int b) {return (a * b) % mod;}
+int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
+int base[N];
+int pre[N];
 
-int base1[N], base2[N];
-int pre1[N], pre2[N];
-
-int add(int a, int b, int mod) { return (a + b) % mod; }
-int sub(int a, int b, int mod) { return ((a - b) % mod + mod) % mod; }
-int mul(int a, int b, int mod) { return (a * b) % mod; }
-
-ii getHash(int l, int r) {
-    if (l > r) return {-1, -1};
-    int h1 = sub(pre1[r], mul(pre1[l - 1], base1[r - l + 1], mod1), mod1);
-    int h2 = sub(pre2[r], mul(pre2[l - 1], base2[r - l + 1], mod2), mod2);
-    return {h1, h2};
+int getHash(int l, int r) {
+    if (l > r) return -1;
+    return sub(pre[r], mul(pre[l - 1], base[r - l + 1]));
 }
 
 void logic() {
@@ -38,31 +39,24 @@ void logic() {
     int m = b.size();
     a = ' ' + a;
     b = ' ' + b;
-
-    ii H = {0, 0};
+    int H = 0;
     for (int i = 1; i <= m; ++i) {
-        H.fi = add(mul(H.fi, baseVal, mod1), b[i], mod1);
-        H.se = add(mul(H.se, baseVal, mod2), b[i], mod2);
+        H = add(mul(H, 256), b[i]);
     }
-
-    base1[0] = base2[0] = 1;
+    base[0] = 1;
     for (int i = 1; i <= max(n, m); ++i) {
-        base1[i] = mul(base1[i - 1], baseVal, mod1);
-        base2[i] = mul(base2[i - 1], baseVal, mod2);
+        base[i] = mul(base[i - 1], 256);
     }
 
     for (int i = 1; i <= n; ++i) {
-        pre1[i] = add(mul(pre1[i - 1], baseVal, mod1), a[i], mod1);
-        pre2[i] = add(mul(pre2[i - 1], baseVal, mod2), a[i], mod2);
+        pre[i] = add(mul(pre[i - 1], 256), a[i]);
     }
-
     for (int r = m; r <= n; ++r) {
         int l = r - m + 1;
         if (getHash(l, r) == H) {
             cout << l << ' ';
         }
     }
-
     // execute;
 }
 
@@ -75,7 +69,19 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
+    
+    // freopen(task ".inp", "r", stdin);
+    // freopen(task ".out", "w", stdout);
 
     logic();
+
     return 0;
 }
+
+/*
+--/shouko\--
+DRAFT:
+
+
+------------
+*/
