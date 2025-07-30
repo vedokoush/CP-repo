@@ -10,58 +10,82 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-#define task ""
+// dont copy my flow dude
+#define task "MST1"
 
 using namespace std;
+
 const int N = 1e6 + 9;
-const int baseVal = 256;
-const int mod1 = 1e9 + 7;
-const int mod2 = 1e9 + 9;
+const int M = 1e5 + 5;
+const int inf = (int)1e18;
+const int mod = (int)1e9 + 7;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
 
-int base1[N], base2[N];
-int pre1[N], pre2[N];
+int par[N], sz[N];
+int n, m;
+vector<iii> e; 
+int taken;
+int ans;
 
-int add(int a, int b, int mod) { return (a + b) % mod; }
-int sub(int a, int b, int mod) { return ((a - b) % mod + mod) % mod; }
-int mul(int a, int b, int mod) { return (a * b) % mod; }
+int acs(int u) {
+    if (par[u] == u) return u;
+    return par[u] = acs(par[u]);
+}
 
-ii getHash(int l, int r) {
-    if (l > r) return {-1, -1};
-    int h1 = sub(pre1[r], mul(pre1[l - 1], base1[r - l + 1], mod1), mod1);
-    int h2 = sub(pre2[r], mul(pre2[l - 1], base2[r - l + 1], mod2), mod2);
-    return {h1, h2};
+void mst(int n) {
+    for (int i = 1; i <= n; ++i) {
+        par[i] = i, sz[i] = 1;
+    }
+}
+
+void join(int u, int v) {
+    u = acs(u); v = acs(v);
+    if (u == v) return;
+    if (sz[u] < sz[v]) swap(u, v);
+    par[v] = u;
+    sz[u] += sz[v];
 }
 
 void logic() {
-    string a, b; cin >> a >> b;
-    int n = a.size();
-    int m = b.size();
-    a = ' ' + a;
-    b = ' ' + b;
+    cin >> n >> m;
 
-    ii H = {0, 0};
-    for (int i = 1; i <= m; ++i) {
-        H.fi = add(mul(H.fi, baseVal, mod1), b[i], mod1);
-        H.se = add(mul(H.se, baseVal, mod2), b[i], mod2);
+    e.reserve(m);
+    while (m--) {
+        int u, v, w; 
+        cin >> u >> v >> w;
+        e.pb({w, {u, v}});
     }
 
-    base1[0] = base2[0] = 1;
-    for (int i = 1; i <= max(n, m); ++i) {
-        base1[i] = mul(base1[i - 1], baseVal, mod1);
-        base2[i] = mul(base2[i - 1], baseVal, mod2);
+    if (n <= 1) { 
+        cout << 0 << '\n'; 
+        return; 
+    }
+    if (m == 0) { 
+        cout << "DISCONNECTED\n"; 
+        return; 
     }
 
-    for (int i = 1; i <= n; ++i) {
-        pre1[i] = add(mul(pre1[i - 1], baseVal, mod1), a[i], mod1);
-        pre2[i] = add(mul(pre2[i - 1], baseVal, mod2), a[i], mod2);
-    }
+    sort(all(e));
+    mst(n);
 
-    for (int r = m; r <= n; ++r) {
-        int l = r - m + 1;
-        if (getHash(l, r) == H) {
-            cout << l << ' ';
+    int rm = n - 1;
+
+
+    for (auto ed : e) {
+        int w = ed.fi;
+        int u = ed.se.fi;
+        int v = ed.se.se;
+        if (acs(u) != acs(v)) {
+            join(u, v);
+            ans += w;
+            ++taken;
+            if (taken == rm) break;
         }
     }
+
+    if (taken != rm) cout << "DISCONNECTED\n";
+    else cout << ans << '\n';
 
     // execute;
 }
@@ -79,3 +103,9 @@ int32_t main() {
     logic();
     return 0;
 }
+
+/*
+--/shouko\--
+
+------------
+*/
