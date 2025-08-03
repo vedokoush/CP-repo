@@ -1,99 +1,77 @@
 #include <bits/stdc++.h>
 #define int long long
-#define all(v) v.begin(), v.end()
-#define ms(d,x) memset(d, x, sizeof(d))
 #define ii pair<int,int>
 #define iii pair<int,ii>
 #define fi first
 #define se second
 #define pb push_back
-#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
-#define shouko 1
-#define orz shouko
-// dont copy my flow dude
-#define task "MST1"
+#define all(v) v.begin(), v.end()
+#define ms(d,x) memset(d,x,sizeof(d))
+#define task "KSHORT"
 
 using namespace std;
+const int N = 1e5 + 5;
+const int K = 15;
+const int inf = 1e18;
 
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
-const int inf = (int)1e18;
-const int mod = (int)1e9 + 7;
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
+int n, m, k;
+vector<ii> adj[N];
+int dp[N][K];
 
-int par[N], sz[N];
-int n, m;
-vector<iii> e; 
-int taken;
-int ans;
-
-int acs(int u) {
-    if (par[u] == u) return u;
-    return par[u] = acs(par[u]);
-}
-
-void mst(int n) {
-    for (int i = 1; i <= n; ++i) {
-        par[i] = i, sz[i] = 1;
-    }
-}
-
-void join(int u, int v) {
-    u = acs(u); v = acs(v);
-    if (u == v) return;
-    if (sz[u] < sz[v]) swap(u, v);
-    par[v] = u;
-    sz[u] += sz[v];
-}
+priority_queue<iii, vector<iii>, greater<>> pq;
 
 void logic() {
-    cin >> n >> m;
-
-    e.reserve(m);
-    while (m--) {
-        int u, v, w; 
-        cin >> u >> v >> w;
-        e.pb({w, {u, v}});
+    cin >> n >> m >> k;
+    for (int i = 1; i <= m; ++i) {
+        int u, v, w; cin >> u >> v >> w;
+        adj[u].pb({v, w});
     }
 
-    if (n <= 1) { 
-        cout << 0 << '\n'; 
-        return; 
-    }
-    if (m == 0) { 
-        cout << "DISCONNECTED\n"; 
-        return; 
-    }
+    for (int i = 1; i <= n; ++i)
+        for (int j = 0; j <= k; ++j)
+            dp[i][j] = inf;
 
-    sort(all(e));
-    mst(n);
+    dp[1][0] = 0;
+    pq.push({0, {1, 0}});
 
-    int rm = n - 1;
+    while (!pq.empty()) {
+        int du = pq.top().fi;
+        int u = pq.top().se.fi;
+        int used = pq.top().se.se;
+        pq.pop();
 
+        if (du > dp[u][used]) continue;
 
-    for (auto ed : e) {
-        int w = ed.fi;
-        int u = ed.se.fi;
-        int v = ed.se.se;
-        if (acs(u) != acs(v)) {
-            join(u, v);
-            ans += w;
-            ++taken;
-            if (taken == rm) break;
+        for (auto e : adj[u]) {
+            int v = e.fi;
+            int w = e.se;
+
+            // không làm đường
+            if (dp[v][used] > dp[u][used] + w) {
+                dp[v][used] = dp[u][used] + w;
+                pq.push({dp[v][used], {v, used}});
+            }
+
+            // làm đường (nếu còn quyền)
+            if (used < k && dp[v][used + 1] > dp[u][used]) {
+                dp[v][used + 1] = dp[u][used];
+                pq.push({dp[v][used + 1], {v, used + 1}});
+            }
         }
     }
 
-    if (taken != rm) cout << "DISCONNECTED\n";
-    else cout << ans << '\n';
+    int res = inf;
+    for (int i = 0; i <= k; ++i) {
+        res = min(res, dp[n][i]);
+    }
 
-    // execute;
+    if (res == inf) cout << -1;
+    else cout << res;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(NULL); cout.tie(NULL);
 
     if (fopen(task ".inp", "r")) {
         freopen(task ".inp", "r", stdin);
@@ -103,9 +81,3 @@ int32_t main() {
     logic();
     return 0;
 }
-
-/*
---/shouko\--
-
-------------
-*/

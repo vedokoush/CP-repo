@@ -1,80 +1,62 @@
 #include <bits/stdc++.h>
-#define skibidi                       \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(0);                       \
-    cout.tie(0);
-#define file(tenfile)                         \
-    if (fopen(tenfile ".inp", "r"))           \
-    {                                         \
-        freopen(tenfile ".inp", "r", stdin);  \
-        freopen(tenfile ".out", "w", stdout); \
-    }
-#define ll long long
-#define fi first
-#define se second
-#define ii pair<int, int>
-#define iii pair<int, ii>
-#define iii pair<int, ii>
-#define On(mask, pos) (mask | (1LL << pos))
-#define Off(mask, pos) (mask ^ (1LL << pos))
-#define endl "\n"
 using namespace std;
-const int N = 1e6 + 69;
-ll n, a[N], dist[N], m, S, T;
-vector<ll> adj[N], ans1;
-queue<ll> q;
-ll ans;
-void bfs(int S)
-{
-    for (int i = 1; i <= n; i++)
-        dist[i] = 1e18;
-    dist[S] = 0;
-    q.push(S);
-    while (!q.empty())
-    {
-        ll u = q.front();
-        q.pop();
-        for (auto v : adj[u])
-        {
-            if (dist[v] > dist[u] + 1)
-            {
-                dist[v] = dist[u] + 1;
-                q.push(v);
+
+#define int long long
+const int N = 4 * 1e4 + 5;
+const int INF = 1e18;
+
+int n, a, b, h[205];
+int dp[205][N][2], pre[205];
+
+void logic() {
+    cin >> n >> a >> b;
+    for (int i = 1; i <= n; i++) {
+        cin >> h[i];
+        pre[i] = pre[i - 1] + h[i];
+    }
+
+    for (int i = 0; i <= n; ++i) {
+        for (int j = 0; j <= a; ++j) {
+            dp[i][j][0] = dp[i][j][1] = INF;
+        }
+    }
+
+    if (h[1] <= a) dp[1][h[1]][0] = 0;
+    if (h[1] <= b) dp[1][0][1] = 0;
+
+    for (int i = 2; i <= n; i++) {
+        int sum = pre[i];
+        for (int sa = 0; sa <= min(sum, a); sa++) {
+            int sb = sum - sa;
+            if (sb > b) continue;
+
+            if (sa >= h[i]) {
+                dp[i][sa][0] = min(dp[i][sa][0], dp[i - 1][sa - h[i]][0]);
+                dp[i][sa][0] = min(dp[i][sa][0], dp[i - 1][sa - h[i]][1] + min(h[i], h[i - 1]));
             }
+
+            dp[i][sa][1] = min(dp[i][sa][1], dp[i - 1][sa][1]);
+            dp[i][sa][1] = min(dp[i][sa][1], dp[i - 1][sa][0] + min(h[i], h[i - 1]));
         }
     }
+
+    int res = INF;
+    for (int sa = 0; sa <= a; ++sa) {
+        res = min({res, dp[n][sa][0], dp[n][sa][1]});
+    }
+    cout << (res == INF ? -1 : res) << '\n';
 }
-void solve()
-{
-    for (int i = 1; i <= n; i++)
-    {
-        ll k;
-        cin >> k;
-        for (int j = 1; j <= k; j++)
-        {
-            ll x;
-            cin >> x;
-            adj[i].push_back(x);
-        }
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    if (fopen("input.txt", "r")) {
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
     }
-    bfs(S);
-    for (int i = 1; i <= n; i++)
-    {
-        if (dist[i] != 1e18)
-           {
-                ans++;
-                ans1.push_back(i);
-           }
-    }
-    cout << ans << endl;
-    for (auto x : ans1)
-    {
-        cout << x << " ";
-    }
-}
-int32_t main()
-{
-    skibidi;
-    cin >> n >> S;
-    solve();
+
+    logic();
+    return 0;
 }
