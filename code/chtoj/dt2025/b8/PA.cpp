@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "PA"
 
 
 using namespace std;
@@ -22,24 +22,40 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int a[N];
-int ans;
+int n, sum, sr, tmp;
+int a[N], dp[N];
+vector<int> t;
 
 void logic() {
-    int n; cin >> n;
+    cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
-    }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
-        }
-        cout << ans << '\n';
+        sum += a[i];
     }
 
+    dp[0] = 1;
+    for (int i = 1; i <= n; ++i) {
+        for (int x = sum; x >= a[i]; --x) {
+            if (dp[x - a[i]]) dp[x] = 1;
+        }
+    }
+
+    for (int i = 0; i <= sum; ++i) {
+        if (dp[i]) t.pb(i);
+    }
+
+    for (auto x : t) {
+        sr += (sum - x + 1);
+    }
+
+    int j = t.size() - 1;
+    for (int i = 0; i < t.size(); ++i) {
+        while (j >= 0 && t[i] + t[j] > sum) j--;
+        if (j < 0) break;
+        tmp += (j + 1);
+    }
+
+    cout << sr * 2 - tmp;
     // execute;
 }
 

@@ -10,72 +10,76 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-#define task "CSPATH"
+// dont copy my flow dude
+#define task "SCHOOL"
+
 
 using namespace std;
-const int N = 2e5 + 5;
+const int N = 1e6 + 9;
+const int M = 1e5 + 5;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
 
-vector<ii> adj[N];
+int n, m;
 int dist[N];
-int ways[N];
+vector<ii> adj[N];
 priority_queue<ii, vector<ii>, greater<>> pq;
+int ways[N];
 
-void dijk(int n, int start) {
-    while (!pq.empty()) {
-        pq.pop();
-    }
+void dijk(int start) {
     for (int i = 1; i <= n; ++i) {
         dist[i] = inf;
         ways[i] = 0;
     }
+
     dist[start] = 0;
     ways[start] = 1;
     pq.push({0, start});
-    
+
     while (!pq.empty()) {
-        int cost = pq.top().fi;
         int u = pq.top().se;
+        int cost = pq.top().fi;
         pq.pop();
 
-        if (cost > dist[u]) continue;
+        if (cost > dist[u]) {
+            continue;
+        }
 
         for (auto e : adj[u]) {
             int v = e.fi;
             int c = e.se;
             if (dist[v] > dist[u] + c) {
                 dist[v] = dist[u] + c;
-                ways[v] = ways[u];
-                pq.push({dist[v], v});
+                ways[v] = ways[u]; 
+                pq.push({dist[v], v}); 
             }
             else if (dist[v] == dist[u] + c) {
-                ways[v] = (ways[v] + ways[u]) % mod;
+                ways[v] += ways[u];
             }
         }
+
     }
 }
 
 void logic() {
-    int n, m; cin >> n >> m;
-
-    for (int i = 1; i <= n; ++i) adj[i].clear();
-
+    cin >> n >> m;
     for (int i = 1; i <= m; ++i) {
-        int u, v, w; cin >> u >> v >> w;
-        adj[u].pb({v, w});
-    }
-
-    dijk(n, 1);
-
-    for (int i = 1; i <= n; ++i) {
-        if (dist[i] == inf) {
-            cout << -1 << ' ' << 0 << '\n';
+        int k; cin >> k;
+        if (k == 1) {
+            int u, v, w; cin >> u >> v >> w;
+            adj[u].pb({v, w});
         }
         else {
-            cout << dist[i] << ' ' << ways[i] << '\n';
+            int u, v, w; cin >> u >> v >> w;
+            adj[u].pb({v, w});
+            adj[v].pb({u, w});
         }
     }
+    dijk(1);
+    cout << dist[n] << ' ' << ways[n];
+    // execute;
 }
 
 int32_t main() {
@@ -87,11 +91,19 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
+    
+    // freopen(task ".inp", "r", stdin);
+    // freopen(task ".out", "w", stdout);
 
-    int t; cin >> t;
-    while (t--) {
-        logic();
-    }
+    logic();
 
     return 0;
 }
+
+/*
+--/shouko\--
+DRAFT:
+
+
+------------
+*/

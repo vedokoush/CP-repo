@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "TEAMS"
 
 
 using namespace std;
@@ -22,24 +22,50 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
+int n;
 int a[N];
-int ans;
+stack<int> s;
+ii c[N];
+bool check[N];
+vector<ii> vt[N];
+    int cnt = 1;
+
+
+void sab() {
+    ms(check, false);
+    sort(c + 1, c + n + 1, greater<ii>());
+    for (int i = 1; i <= n; ++i) {
+        // cout << c[i].fi << ' ' << c[i].se << '\n';
+    }
+    int size = c[1].fi - 1;
+    vt[cnt].pb({c[1].fi, c[1].se});
+    for (int i = 2; i <= n; ++i) {
+        if (size > 0) {
+            vt[cnt].pb({c[i].fi, c[i].se});
+            size--;
+        }
+        else {
+            size = a[i];
+            ++cnt;
+            vt[cnt].pb({c[i].fi, c[i].se});
+        }
+    }
+}
 
 void logic() {
-    int n; cin >> n;
+    cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        c[i].fi = a[i];
+        c[i].se = i;
     }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
-        }
-        cout << ans << '\n';
+    sab();
+    cout << cnt << '\n';
+    for (int i = 1; i <= cnt; ++i) {
+        cout<<vt[i].size()<<" ";
+        for(auto x:vt[i]) cout<<x.se<<" ";
+        cout << '\n';
     }
-
     // execute;
 }
 

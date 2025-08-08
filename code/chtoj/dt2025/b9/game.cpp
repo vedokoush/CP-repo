@@ -10,7 +10,7 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "MARB"
+#define task "GAME"
 
 using namespace std;
 const int N = 2e2 + 9;

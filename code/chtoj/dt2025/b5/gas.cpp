@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "GAS"
 
 
 using namespace std;
@@ -22,24 +22,29 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
+int ans = 1;
+int n, k;
+deque<ii> dq;
 int a[N];
-int ans;
 
 void logic() {
-    int n; cin >> n;
+    cin >> n >> k;
+    k -= 1;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
     }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
+    dq.push_front({a[1], 1});
+    for (int i = 2; i <= n; ++i) {
+        while (!dq.empty() and dq.back().fi > a[i]) {
+            dq.pop_back();
         }
-        cout << ans << '\n';
+        dq.push_back({a[i], i});
+        while (!dq.empty() and dq.front().se < max(1LL, i - k + 1)) {
+            dq.pop_front();
+        }
+        ans += dq.front().fi;
     }
-
+    cout << ans;
     // execute;
 }
 

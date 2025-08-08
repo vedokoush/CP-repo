@@ -1,74 +1,68 @@
 #include <bits/stdc++.h>
-using namespace std;
-
-#define NAME "EBOLA"
 #define int long long
-const int N = 2 * 1e5 + 5;
-const int INF = 1e9;
+#define all(v) v.begin(), v.end()
+#define ms(d,x) memset(d, x, sizeof(d))
+#define ii pair<int,int>
+#define iii pair<int,ii>
+#define fi first
+#define se second
+#define pb push_back
+#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
+#define shouko 1
+#define orz shouko
+// dont copy my flow dude
+#define task ""
 
-int n, m, dist[N], s, t;
-vector < int > p[N];
 
-void BFS (int start)
-{
-    for (int i = 1; i <= n; i++)
-        dist[i] = INF;
+using namespace std;
+const int N = 1e6 + 9;
+const int M = 1e5 + 5;
+const int inf = 1e18;
+const int mod = 1e9 + 7;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
 
-    dist[start] = 0;
-    queue < int > q;
-    q.push (start);
+int a[N];
+int ans;
+int pre[N];
 
-    while (!q.empty ())
-    {
-        int node = q.front ();
-        q.pop ();
-
-        for (auto v : p[node])
-        {
-            if (dist[v] > dist[node] + 1)
-            {
-                dist[v] = dist[node] + 1;
-                q.push (v);
-            }
-        }
+void logic() {
+    int n; cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
     }
+    int q; cin >> q;
+    while (q--) {
+        int l, r; cin >> l >> r;
+        cout << pre[r] - pre[l - 1] << '\n';
+    }
+
+    // execute;
 }
 
-void solve()
-{  
-    cin >> n >> s;
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> m;
-        for (int j = 1; j <= m; j++)
-        {
-            int x; cin >> x;
-            p[i].push_back (x); 
-        }
-    }
-
-    BFS (s);
-    vector < int > ans;
-    for (int i = 1; i <= n; i++)
-    {
-        if (dist[i] != INF) ans.push_back (i);
-    }
-
-    cout << ans.size() << '\n';
-    for (auto i : ans) cout << i << ' ';
-
-}
-
-int32_t main()
-{
-    ios::sync_with_stdio(false);
+int32_t main() {
+    ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    if(fopen(NAME ".inp", "r")){
-        freopen(NAME ".inp", "r", stdin);
-        freopen(NAME ".out", "w", stdout);
+    if (fopen(task ".inp", "r")) {
+        freopen(task ".inp", "r", stdin);
+        freopen(task ".out", "w", stdout);
     }
+    
+    // freopen(task ".inp", "r", stdin);
+    // freopen(task ".out", "w", stdout);
 
-    solve ();
+    logic();
+
+    return 0;
 }
+
+/*
+--/shouko\--
+DRAFT:
+
+
+------------
+*/

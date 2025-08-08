@@ -22,24 +22,41 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int a[N];
-int ans;
+int n, k;
+int a[N], pre[N], f[N], dp[N];
+deque<int> dq;
+int trace[N];
+
+void push(int i) {
+    while (!dq.empty() && f[i] >= f[dq.back()])
+        dq.pop_back();
+    dq.push_back(i);
+}
+
+void pop(int i) {
+    if (!dq.empty() && dq.front() == i)
+        dq.pop_front();
+}
 
 void logic() {
-    int n; cin >> n;
+    cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
     }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
-        }
-        cout << ans << '\n';
-    }
+    f[0] = pre[0];
+    f[1] = dp[0] - pre[1];
+    push(0);
 
+    for (int i = 1; i <= n; ++i) {
+        push(i);
+        dp[i] = f[dq.front()] + pre[i];
+        f[i + 1] = dp[i] - pre[i + 1];
+        if (i - k + 1 >= 0) {
+            pop(i - k + 1);
+        }
+    }
+    cout << dp[n];
     // execute;
 }
 
@@ -64,7 +81,6 @@ int32_t main() {
 /*
 --/shouko\--
 DRAFT:
-
 
 ------------
 */

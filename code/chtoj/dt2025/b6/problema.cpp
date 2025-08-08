@@ -22,24 +22,35 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int a[N];
-int ans;
+int n ,m;
+vector<ii> adj[N];
+int maxx = -inf;
+int dp[N];
+int s[N];
 
 void logic() {
-    int n; cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+    cin >> n >> m;
+    for (int i = 1; i <= m; ++i) {
+        int u, v, w; cin >> u >> v >> w;
+        maxx = max(maxx, w);
+        adj[w].pb({u, v});
     }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
+    for (int i = 1; i <= maxx; ++i) {
+        for (auto e : adj[i]) {
+            int u = e.fi;
+            int v = e.se;
+            s[v] = max(s[v], dp[u] + 1);
         }
-        cout << ans << '\n';
+        for (auto e : adj[i]) {
+            int u = e.fi;
+            int v = e.se;
+            dp[v] = max(dp[v], s[v]);
+        }
+        for (auto e : adj[i]) {
+            s[e.se] = 0;
+        }
     }
-
+    cout << *max(dp + 1, dp + n + 1);
     // execute;
 }
 

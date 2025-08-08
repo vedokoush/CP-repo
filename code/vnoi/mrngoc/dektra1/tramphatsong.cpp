@@ -15,31 +15,62 @@
 
 
 using namespace std;
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
+const int N = 1e6;
+const int M = 1e6 + 9;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int a[N];
-int ans;
+int n;
+int a[M];
+int k;
+
+bool check(int x) {
+    for (int i = 0; i < n; ++i) {
+        deque<int> dq;
+        for (int j = 0; j < n; ++j) {
+            int val = a[(i + j) % n];
+            if (i + j >= n) {
+                val += N;
+            }
+            dq.pb(val);
+        }
+
+        int cnt = 0;
+
+        while (!dq.empty()) {
+            int r = dq.front() + 2 * x;
+            ++cnt;
+            
+            while (!dq.empty() and dq.front() <= r) {
+                dq.pop_front();
+            }
+            if (cnt > k) break;
+        }
+        if (cnt <= k) return true;
+    }
+    return false;
+}
 
 void logic() {
-    int n; cin >> n;
-    for (int i = 1; i <= n; ++i) {
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
         cin >> a[i];
     }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
+    cin >> k;
+    int l = 0, r = N / 2, ans = r;
+    while (l <= r) {
+        int mid = (l + r) >> 1;
+        if (check(mid)) {
+            ans = mid;
+            r = mid - 1;
         }
-        cout << ans << '\n';
+        else {
+            l = mid + 1;
+        }
     }
-
+    cout << ans;
     // execute;
 }
 

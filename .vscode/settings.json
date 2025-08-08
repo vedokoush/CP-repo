@@ -97,6 +97,12 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "__verbose_abort": "cpp",
+        "execution": "cpp",
+        "locale": "cpp"
     }
 }
