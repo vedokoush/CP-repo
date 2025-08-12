@@ -28,25 +28,13 @@ int mp[M][M][M][M];
 bool check[M][M][M][M];
 int dp[M][M][M][M];
 int ans = -inf;
-
+                    map<int,int> cnt;
 
 void logic() {
     cin >> m >> n;
-    vector<int> vals;
     for (int i = 1; i <= m; ++i) {
         for (int j = 1; j <= n; ++j) {
-            int x; cin >> x;
-            vals.push_back(x);
-            a[i][j] = x;
-        }
-    }
-    // Coordinate compression
-    sort(vals.begin(), vals.end());
-    vals.erase(unique(vals.begin(), vals.end()), vals.end());
-    int K = vals.size();
-    for (int i = 1; i <= m; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            a[i][j] = lower_bound(vals.begin(), vals.end(), a[i][j]) - vals.begin() + 1;
+            cin >> a[i][j];
         }
     }
 
@@ -61,26 +49,25 @@ void logic() {
         }
     }
 
-    static int freq[N*N];
     for (int i = 1; i <= m; ++i) {
         for (int j = i; j <= m; ++j) {
-            memset(freq, 0, sizeof(int) * (K + 2));
+            cnt.clear();
             int r = 1;
             for (int l = 1; l <= n; ++l) {
                 while (r <= n) {
                     bool dup = false;
                     for (int row = i; row <= j; ++row) {
-                        if (++freq[a[row][r]] > 1) { dup = true; }
+                        if (++cnt[a[row][r]] > 1) { dup = true; }
                     }
                     if (dup) {
-                        for (int row = i; row <= j; ++row) freq[a[row][r]]--;
+                        for (int row = i; row <= j; ++row) cnt[a[row][r]]--;
                         break;
                     }
                     ++r;
                 }
                 check[i][j][l][r-1] = false;
                 for (int row = i; row <= j; ++row) {
-                    freq[a[row][l]]--;
+                    cnt[a[row][l]]--;
                 }
             }
         }

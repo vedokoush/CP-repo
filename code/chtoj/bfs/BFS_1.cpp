@@ -10,7 +10,6 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-// dont copy my flow dude
 #define task "BFS_1"
 
 using namespace std;
@@ -23,15 +22,14 @@ int n, m;
 vector<int> adj[N], res;
 int trace[N];
 bool check[N];
-queue<int> q;
 
 void bfs() {
+    queue<int> q;
     q.push(1);
     check[1] = true;
     while (!q.empty()) {
         int u = q.front();
         q.pop();
-
         for (auto v : adj[u]) {
             if (!check[v]) {
                 check[v] = true;
@@ -47,18 +45,20 @@ void logic() {
     for (int i = 1; i <= m; ++i) {
         int u, v; cin >> u >> v;
         adj[u].pb(v);
+        adj[v].pb(u);
     }
     bfs();
+    if (!check[n]) {
+        cout << -1;
+        return;
+    }
     int u = n;
     while (u > 0) {
         res.pb(u);
         u = trace[u];
     }
     reverse(all(res));
-    for (auto x : res) {
-        cout << x << ' ';
-    }
-    // execute;
+    for (auto x : res) cout << x << ' ';
 }
 
 int32_t main() {
@@ -75,11 +75,3 @@ int32_t main() {
 
     return 0;
 }
-
-/*
---/shouko\--
-DRAFT:
-
-
-------------
-*/

@@ -22,24 +22,8 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int a[N];
-int ans;
 
 void logic() {
-    int n; cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-    }
-    int q; cin >> q;
-    while (q--) {
-        ans = 0;
-        int l, r; cin >> l >> r;
-        for (int i = l; i <= r; ++i) {
-            ans += a[i];
-        }
-        cout << ans << '\n';
-    }
-
     // execute;
 }
 

@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "PHATQUA"
 
 
 using namespace std;
@@ -22,18 +22,29 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
+int n, k;
+int pre[N];
+int a[N];
+int maxx;
+int dp[N], dpr[N];
+int ans = inf;
 
 void logic() {
     cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
     }
-    for (int l = 1; l <= n; ++l) {
-        for (int r = l; r <= n; ++r) {
-            int val = a[r];
-            int x = 
-        }
+    for (int i = k; i <= n; ++i) {
+        dp[i] = max(dp[i - 1], pre[i] - pre[i - k]);
     }
+    for (int i = n - k + 1; i >= 1; i--) {
+        dpr[i] = max(dpr[i + 1], pre[i + k - 1] - pre[i - 1]);
+    }
+    for (int i = 1; i <= n; ++i) {
+        ans = min(ans, max(dp[i - 1], dpr[i + k]));
+    }
+    cout << ans;
     // execute;
 }
 
