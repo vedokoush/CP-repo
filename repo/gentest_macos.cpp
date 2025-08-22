@@ -12,8 +12,12 @@ long long Rand(long long l, long long h) {
 
 void GenTest() {
     ofstream cout (NAME ".inp");
-    long long a = Rand(1, 100), b = Rand(1, 100);
-    cout << a << ' ' << b << '\n';
+    long long n = Rand(1, 5);
+    for (int i = 1; i <= n; ++i) {
+        int c = Rand(1, 2);
+        if (c == 1) cout << "a";
+        else cout << "b";
+    }
 }
 
 int main() {

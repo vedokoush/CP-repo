@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"/Users/shouko/Documents/workspaces/tests/test.py","tests":[{"id":1755132844981,"input":"123123\n3122312","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shouko/Documents/workspaces/tests/test.py","group":"local","local":true}

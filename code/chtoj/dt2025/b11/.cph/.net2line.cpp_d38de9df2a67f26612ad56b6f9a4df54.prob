@@ -1,0 +1,1 @@
+{"name":"Local: net2line","url":"/Users/shouko/Documents/workspaces/code/chtoj/dt2025/b11/net2line.cpp","tests":[{"id":1755052603433,"input":"2\n3\n2 1\n3 7\n6 4 5\n3\n2 10\n3 7\n6 4 5","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shouko/Documents/workspaces/code/chtoj/dt2025/b11/net2line.cpp","group":"local","local":true}

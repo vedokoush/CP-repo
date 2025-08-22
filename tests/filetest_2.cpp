@@ -22,8 +22,39 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
+int n;
+int f[N], c[N];
+int sum;
+vector<ii> s;
+int ans;
 
 void logic() {
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> f[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        cin >> c[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        sum += f[i];
+    }
+    if (sum < n) {
+        cout << -1;
+        return;
+    }
+    for (int i = 1; i <= n; ++i) {
+        s.pb({c[i], f[i]});
+    }
+    sort(s.begin(), s.end());
+    int tmp = n, ans = 0;
+    for (auto [c, val] : s) {
+        int t = min(tmp, (int)val);
+        ans += t * c;
+        tmp -= t;
+        if (tmp == 0) break;
+    }
+    cout << ans;
     // execute;
 }
 
