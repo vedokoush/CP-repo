@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task "FROGS"
+#define task "BOX"
 
 
 using namespace std;
@@ -22,39 +22,33 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int n;
-int h[N];
-int k[N];
-stack<int> st;
-int b[N];
+int l, r;
+vector<int> val;
+
+int f(int x) {
+    int s = 0;
+    while (x > 0) {
+        s += x % 81;
+        x /= 81;
+    }
+    return s;
+}
 
 void logic() {
-    cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> h[i];
+    cin >> l >> r;
+    for (int i = l; i <= r; ++i) {
+        val.pb(f(i));
     }
-    for (int i = 1; i <= n; ++i) {
-        cin >> k[i];
-    }
-    for (int i = 1; i <= n; ++i) {
-        while (!st.empty() and h[st.top()] < h[i]) {
-            b[st.top()] = i;
-            st.pop();
+    int ans = 0;
+    int n = val.size();
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (val[i] > val[j]) {
+                ++ans;
+            }
         }
-        st.push(i);                          
     }
-
-    for (int i = 1; i <= n; ++i) {
-        int x = k[i];
-        int tmp = i;
-        while (x > 0) {
-            tmp = b[tmp];
-            x--;
-        }
-        if (h[tmp] == 0) cout << -1 << ' ';
-        else cout << h[tmp] << ' ';
-    }  
-
+    cout << ans % mod;
     // execute;
 }
 
