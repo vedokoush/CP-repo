@@ -104,6 +104,7 @@
         "__verbose_abort": "cpp",
         "execution": "cpp",
         "locale": "cpp",
-        "__tree": "cpp"
+        "__tree": "cpp",
+        "__config": "cpp"
     }
 }

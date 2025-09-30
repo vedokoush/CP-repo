@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task "FRPR"
+#define task ""
 
 
 using namespace std;
@@ -22,39 +22,31 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int cnt1, cnt2, x, y; 
+int n, m ,k;
 
-bool check(int v) {
-    int dx = v - v / x;
-    int dy = v - v / y;
-    int dxy = v - v / (x * y);
-    int cnt = dx + dy - dxy;
-    dx -= cnt;
-    dy -= cnt;
-    if (dx < cnt1) {
-        cnt -= (cnt1 - dx);
+bool check(int x) {
+    int de = 0;
+    for (int i = 1; i <= n; ++i) {
+        de += min(x / i, m);
     }
-    if (dy < cnt2) {
-        cnt -= (cnt2 - dy);
-    }
-    return cnt >= 0;
+    return de < k;
 }
 
 void logic() {
-    cin >> cnt1 >> cnt2 >> x >> y;
-    int l = 1, r = inf, ans = 0;
+    cin >> n >> m >> k;
+    int l = 1, r = n * m, ans;
     while (l <= r) {
-        int mid = (l + r) / 2;
+        int mid = (l + r) >> 1;
         if (check(mid)) {
             ans = mid;
-            r = mid - 1;
-        }
-        else {
             l = mid + 1;
         }
+        else {
+            r = mid - 1;
+        }
     }
-    cout << ans;
-    //execute;
+    cout << ans + 1;
+    // execute;
 }
 
 int32_t main() {
