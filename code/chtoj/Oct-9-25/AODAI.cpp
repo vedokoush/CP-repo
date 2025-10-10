@@ -11,8 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
-
+#define task "AODAI"
 
 using namespace std;
 const int N = 1e6 + 9;
@@ -23,26 +22,41 @@ int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
 int n;
-int a[N];
-int ans;
-int mp[N];
+int cnt[5];
+int ans = 0;
 
 void logic() {
     cin >> n;
+    ms(cnt, 0);
+    ans = 0;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        int x; cin >> x;
+        cnt[x]++;
     }
-    int l = 1;
-    for (int r = 1; r <= n; ++r) {
-        mp[a[r]]++;
-        while (mp[a[r]] > 2) {
-            mp[a[l]]--;
-            ++l;
+    ans += cnt[4];
+    while (cnt[1] > 0 and cnt[3] > 0) {
+        ans++;
+        cnt[1]--;
+        cnt[3]--;
+    }
+    if (cnt[3] > 0) {
+        ans += cnt[3];
+        cnt[3] = 0;
+    }
+    ans += cnt[2] / 2;
+    if (cnt[2] % 2 == 1) {
+        ans++;
+        if (cnt[1] > 2) {
+            cnt[1] -= 2;
+        } else {
+            cnt[1] = 0;
         }
-        ans += (r - l + 1);
+    }
+    if (cnt[1] > 0) {
+        ans += cnt[1] / 4;
+        if (cnt[1] % 4 != 0) ans++;
     }
     cout << ans;
-    // execute;
 }
 
 int32_t main() {
@@ -54,12 +68,10 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
 
     logic();
 
+    // execute
     return 0;
 }
 

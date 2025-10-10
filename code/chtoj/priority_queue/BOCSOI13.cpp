@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "BOCSOI13"
 
 
 using namespace std;
@@ -24,24 +24,24 @@ int dy[] = {0, 1, 0, -1};
 
 int n;
 int a[N];
-int ans;
-int mp[N];
+priority_queue<int, vector<int>, greater<int>> pq;
+double ans;
+
 
 void logic() {
     cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        pq.push(a[i]);
     }
-    int l = 1;
-    for (int r = 1; r <= n; ++r) {
-        mp[a[r]]++;
-        while (mp[a[r]] > 2) {
-            mp[a[l]]--;
-            ++l;
-        }
-        ans += (r - l + 1);
+    
+    while (pq.size() > 1) {
+        int x = pq.top(); pq.pop();
+        int y = pq.top(); pq.pop();
+        ans += (x + y) * 0.05;
+        pq.push(x + y);
     }
-    cout << ans;
+    cout << fixed << setprecision(2) << ans;
     // execute;
 }
 

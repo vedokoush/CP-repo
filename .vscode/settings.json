@@ -105,6 +105,9 @@
         "execution": "cpp",
         "locale": "cpp",
         "__tree": "cpp",
-        "__config": "cpp"
+        "__config": "cpp",
+        "__assert": "cpp",
+        "__assertion_handler": "cpp",
+        "filesystem": "cpp"
     }
 }

@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "SDB"
 
 
 using namespace std;
@@ -22,26 +22,36 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
+int f[N];
+vector<int> prime;
 int n;
-int a[N];
-int ans;
-int mp[N];
+
+void sieve() {
+    for (int i = 1; i <= 1e6; ++i) {
+        f[i] = true;
+    }
+    f[0] = f[1] = false;
+    for (int i = 2; i * i <= 1e6; ++i) {
+        if (f[i]) {
+            for (int j = i * i; j <= 1e6; j += i) {
+                f[j] = false;
+            }
+        }
+    }
+    for (int i = 2; i <= 1e6; ++i) {
+        if (f[i]) prime.pb(i);
+    }
+}
 
 void logic() {
+    sieve();
     cin >> n;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        int x; cin >> x;
+        auto it = upper_bound(prime.begin(), prime.end(), (int)sqrt(x));
+        int k =  *it;
+        cout << k * k << ' ';
     }
-    int l = 1;
-    for (int r = 1; r <= n; ++r) {
-        mp[a[r]]++;
-        while (mp[a[r]] > 2) {
-            mp[a[l]]--;
-            ++l;
-        }
-        ans += (r - l + 1);
-    }
-    cout << ans;
     // execute;
 }
 

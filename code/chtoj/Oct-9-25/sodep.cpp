@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "SODEP"
 
 
 using namespace std;
@@ -22,26 +22,16 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int n;
-int a[N];
 int ans;
-int mp[N];
+int n;
 
 void logic() {
     cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+    while (n != 0) {
+        ans = ans % 10 + n % 10;
+        n /= 10;
     }
-    int l = 1;
-    for (int r = 1; r <= n; ++r) {
-        mp[a[r]]++;
-        while (mp[a[r]] > 2) {
-            mp[a[l]]--;
-            ++l;
-        }
-        ans += (r - l + 1);
-    }
-    cout << ans;
+    cout << (ans == 9);
     // execute;
 }
 

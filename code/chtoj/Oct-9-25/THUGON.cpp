@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "THUGON"
 
 
 using namespace std;
@@ -22,27 +22,21 @@ const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-int n;
-int a[N];
-int ans;
-int mp[N];
-
 void logic() {
-    cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-    }
-    int l = 1;
-    for (int r = 1; r <= n; ++r) {
-        mp[a[r]]++;
-        while (mp[a[r]] > 2) {
-            mp[a[l]]--;
-            ++l;
+    string s; 
+    while(cin >> s) {
+        int cnt = 1;
+        for (int i = 1; i <= (int)s.size(); ++i) {
+            if (s[i] == s[i - 1]) {
+                cnt++;
+            } else {
+                if (cnt > 1) cout << cnt;
+                cout << s[i - 1];
+                cnt = 1;
+            }
         }
-        ans += (r - l + 1);
+        cout << '\n';
     }
-    cout << ans;
-    // execute;
 }
 
 int32_t main() {

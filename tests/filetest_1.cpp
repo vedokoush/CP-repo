@@ -1,71 +1,35 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 #define int long long
-#define all(v) v.begin(), v.end()
-#define ms(d,x) memset(d, x, sizeof(d))
-#define ii pair<int,int>
-#define iii pair<int,ii>
-#define fi first
-#define se second
-#define pb push_back
-#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
-#define shouko 1
-#define orz shouko
-// dont copy my flow dude
-#define task ""
-
-
 using namespace std;
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
-const int inf = 1e18;
-const int mod = 1e9 + 7;
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
 
+const int pad = 1000058;
 
-int check(int x) {
-    return x / 3 + x / 5 + x / 7 - x / 15 - x / 21 - x / 35 + x / 105;
-}
+int n, ans = 0;
+int a[pad];
+unordered_map<int, int> mp;
 
-void logic() {
-    int n; cin >> n;
-    int l = 0, r = 1e18, ans = 0;
-    while (l <= r) {
-        int mid = (l + r) >> 1;
-        if (check(mid) >= n) {
-            r = mid - 1;
-            ans = mid;
-        }
-        else {
-            l = mid + 1;
-        }
-    }
-    cout << ans;
-    // execute;
-}
-
-int32_t main() {
+main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(NULL); cout.tie(NULL);
 
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
+    if (fopen("BEAUTARR.inp", "r")) {
+        freopen("BEAUTARR.inp", "r", stdin);
+        freopen("BEAUTARR.out", "w", stdout);
     }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
+    cin >> n;
+    for (int i=1; i<=n; i++) {
+        cin >> a[i];
+    }
 
-    logic();
+    int L = 1;
+    for (int R = 1; R <= n; R++) {
+        mp[a[R]]++;
+        while (mp[a[R]] > 2) {
+            mp[a[L]]--;
+            L++;
+        }
+        ans += (R - L + 1);
+    }
 
-    return 0;
+    cout << ans << "\n";
 }
-
-/*
---/shouko\--
-DRAFT:
-
-
-------------
-*/
