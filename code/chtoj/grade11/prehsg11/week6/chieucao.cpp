@@ -21,28 +21,22 @@ const int inf = 1e18;
 const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
-int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
 int n;
 int a[N];
-int ans;
-int s;
+vector<int> v;
 
 void logic() {
-    cin >> n;
+    cin >> n;   
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
-        s += a[i];
+        v.pb(a[i]);
     }
-    sort (a + 1, a + n + 1);
-    for (int i = 1; i <= n / 2; ++i) {
-        ans += abs(a[i] - a[n - i + 1]);
-        // cout << a[i] << ' ' << a[n - i + 1] << '\n';
+    sort(v.begin(), v.end());
+    for (int i = 1; i <= n; ++i) {
+        int it = lower_bound(v.begin(), v.end(), a[i]) - v.begin();
+        cout << it << ' ';
     }
-    // cout << s << ' ' << ans << '\n';
-    cout << s + ans;
     // execute;
 }
 

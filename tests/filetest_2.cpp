@@ -21,27 +21,14 @@ const int inf = 1e18;
 const int mod = 1e9 + 7;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
+int add(int a, int b) {return (a + b) % mod;}
+int mul(int a, int b) {return (a * b) % mod;}
+int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int n;
-int a[N];
-int ans;
-int mp[N];
 
 void logic() {
     cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-    }
-    int l = 1;
-    for (int r = 1; r <= n; ++r) {
-        mp[a[r]]++;
-        while (mp[a[r]] > 2) {
-            mp[a[l]]--;
-            ++l;
-        }
-        ans += (r - l + 1);
-    }
-    cout << ans;
+    fo r(in ti = 1)
     // execute;
 }
 

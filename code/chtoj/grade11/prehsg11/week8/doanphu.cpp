@@ -26,23 +26,34 @@ int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
 int n;
-int a[N];
+pair<int, int> a[N];
 int ans;
-int s;
 
 void logic() {
     cin >> n;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-        s += a[i];
+        cin >> a[i].fi >> a[i].se;
+    }
+    for (int i = 1; i <= n; ++i) {
+        a[i].se = a[i].fi + a[i].se;
     }
     sort (a + 1, a + n + 1);
-    for (int i = 1; i <= n / 2; ++i) {
-        ans += abs(a[i] - a[n - i + 1]);
-        // cout << a[i] << ' ' << a[n - i + 1] << '\n';
+
+    int l = a[1].fi;
+    int r = a[1].se;
+
+    for (int i = 2; i <= n; ++i) {
+        if (a[i].fi <= r) {
+            r = max(r, a[i].se);
+        }
+        else {
+            ans += r - l;
+            l = a[i].fi;
+            r = a[i].se;
+        }
     }
-    // cout << s << ' ' << ans << '\n';
-    cout << s + ans;
+    ans += r - l;
+    cout << ans;
     // execute;
 }
 

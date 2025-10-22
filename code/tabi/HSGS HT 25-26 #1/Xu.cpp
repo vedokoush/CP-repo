@@ -25,24 +25,9 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int n;
-int a[N];
-int ans;
-int s;
 
 void logic() {
-    cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-        s += a[i];
-    }
-    sort (a + 1, a + n + 1);
-    for (int i = 1; i <= n / 2; ++i) {
-        ans += abs(a[i] - a[n - i + 1]);
-        // cout << a[i] << ' ' << a[n - i + 1] << '\n';
-    }
-    // cout << s << ' ' << ans << '\n';
-    cout << s + ans;
+
     // execute;
 }
 

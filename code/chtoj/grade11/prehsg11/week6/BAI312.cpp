@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task ""
+#define task "bai312"
 
 
 using namespace std;
@@ -25,24 +25,26 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int n;
-int a[N];
-int ans;
-int s;
+bool isPrime(int n) {
+    if (n < 2) return false;
+    if (n % 2 == 0) return n == 2;
+    for (int i = 3; i * i <= n; i += 2)
+        if (n % i == 0) return false;
+    return true;
+}
+
+string s;
 
 void logic() {
-    cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-        s += a[i];
+    cin >> s;
+    int ans = -1;
+    for (int i = 0; i < (int)s.size(); i++) {
+        string t = s.substr(0, i) + s.substr(i + 1);
+        if (t[0] == '0') continue;
+        int val = stoll(t);
+        if (isPrime(val)) ans = max(ans, val);
     }
-    sort (a + 1, a + n + 1);
-    for (int i = 1; i <= n / 2; ++i) {
-        ans += abs(a[i] - a[n - i + 1]);
-        // cout << a[i] << ' ' << a[n - i + 1] << '\n';
-    }
-    // cout << s << ' ' << ans << '\n';
-    cout << s + ans;
+    cout << ans;
     // execute;
 }
 
@@ -69,3 +71,4 @@ int32_t main() {
 DRAFT:
 ------------
 */
+

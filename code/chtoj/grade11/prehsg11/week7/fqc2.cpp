@@ -10,39 +10,28 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-// dont copy my flow dude
 #define task ""
 
-
 using namespace std;
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
-const int inf = 1e18;
-const int mod = 1e9 + 7;
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
-int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+const int N = 1e6 + 9;
 int n;
 int a[N];
-int ans;
-int s;
+map<int, int> mp;
+vector<int> t;
 
 void logic() {
     cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
-        s += a[i];
+        if (!mp[a[i]]) t.pb(a[i]);
+        ++mp[a[i]];
     }
-    sort (a + 1, a + n + 1);
-    for (int i = 1; i <= n / 2; ++i) {
-        ans += abs(a[i] - a[n - i + 1]);
-        // cout << a[i] << ' ' << a[n - i + 1] << '\n';
+
+    cout << t.size() << '\n';
+    for (int x : t) {
+        cout << x << ' ' << mp[x] << '\n';
     }
-    // cout << s << ' ' << ans << '\n';
-    cout << s + ans;
     // execute;
 }
 
@@ -55,17 +44,11 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
 
     logic();
-
     return 0;
 }
 
 /*
 --/shouko\--
-DRAFT:
-------------
 */
