@@ -27,20 +27,18 @@ int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
 int n, k;
 int a[N];
-int dp[N];
+int ans;
 
 void logic() {
     cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
     }
-    dp[0] = 1;
-    for (int i = 1; i <= n; ++i) {
-        for (int j = a[i]; j <= k; ++j) {
-            dp[j] = add(dp[j], dp[j - a[i]]);
-        }
+    sort (a + 1, a + n + 1);
+    for (int i = 1; i <= k; ++i) {
+        ans += a[i];
     }
-    cout << dp[k];
+    cout << ans;
     // execute;
 }
 

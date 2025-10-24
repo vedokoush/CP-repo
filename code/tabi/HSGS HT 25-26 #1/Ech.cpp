@@ -26,21 +26,23 @@ int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
 int n, k;
-int a[N];
+int h[N];
 int dp[N];
 
 void logic() {
     cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        cin >> h[i];
     }
-    dp[0] = 1;
-    for (int i = 1; i <= n; ++i) {
-        for (int j = a[i]; j <= k; ++j) {
-            dp[j] = add(dp[j], dp[j - a[i]]);
+    dp[1] = 0;
+    for (int i = 2; i <= n; ++i) {
+        dp[i] = inf;
+        for (int j = i - k; j <= i - 1; ++j) {
+            if (j >= 1) 
+                dp[i] = min(dp[i], dp[j] + abs(h[i] - h[j]));
         }
     }
-    cout << dp[k];
+    cout << dp[n];
     // execute;
 }
 
