@@ -54,7 +54,6 @@ void logic() {
     }
     int ans = 0;
     for (int j = 1; j <= m; ++j) {
-        // cout << dp[n][j] << ' ';
         ans = add(ans, dp[n][j]);
     }
     cout << ans;
