@@ -1,3 +1,3 @@
 git add .
-git commit -m "ihateluvcp"
+git commit -m "code"
 git push origin main
