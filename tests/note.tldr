@@ -36,9 +36,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 719.7826136892752,
-			"y": 574.7418477412245,
-			"lastActivityTimestamp": 1761529649119,
+			"x": 983.1232485162782,
+			"y": 420.6602616052551,
+			"lastActivityTimestamp": 1761564287860,
 			"meta": {}
 		},
 		{
@@ -6289,6 +6289,41 @@
 			"typeName": "shape"
 		},
 		{
+			"x": 983.1232485162782,
+			"y": 420.6602616052551,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:h79A_GQTLDfQ4P26OHfq8",
+			"type": "draw",
+			"props": {
+				"segments": [
+					{
+						"type": "free",
+						"points": [
+							{
+								"x": 0,
+								"y": 0,
+								"z": 0.5
+							}
+						]
+					}
+				],
+				"color": "red",
+				"fill": "none",
+				"dash": "draw",
+				"size": "m",
+				"isComplete": true,
+				"isClosed": false,
+				"isPen": false,
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "aaPbO7SV",
+			"typeName": "shape"
+		},
+		{
 			"x": 280.1640625,
 			"y": 258.234375,
 			"rotation": 0,
@@ -8236,7 +8271,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1329,
+				"w": 967,
 				"h": 911
 			},
 			"insets": [
