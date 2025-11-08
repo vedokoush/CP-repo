@@ -1,40 +1,56 @@
 #include <bits/stdc++.h>
-using namespace std;
 #define int long long
-#define task "SPNUM"
 #define all(v) v.begin(), v.end()
 #define ms(d,x) memset(d, x, sizeof(d))
+#define ii pair<int,int>
+#define iii pair<int,ii>
+#define fi first
+#define se second
+#define pb push_back
+#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
+#define shouko 1
+#define orz shouko
+// dont copy my flow dude
+#define task ""
 
-bool prime[1000006];
 
-void sieve(int n){
-    ms(prime, true);
-    prime[0] = prime[1] = false;
-    for(int i=2; i*i<=n; i++)
-        if(prime[i])
-            for(int j=i*i; j<=n; j+=i)
-                prime[j] = false;
+using namespace std;
+const int N = 1e6 + 9;
+const int M = 1e5 + 5;
+const int inf = 1e18;
+const int mod = 1e9 + 7;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+int add(int a, int b) {return (a + b) % mod;}
+int mul(int a, int b) {return (a * b) % mod;}
+int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
+
+
+void logic() {
+
+    // execute;
 }
 
-void logic(){
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    
-    int n, k; cin >> n >> k;
-    sieve(n);
-    
-    int ans = 0;
-    for(int i=2; i<=n; i++)
-        if(prime[i] && __builtin_popcount(i) == k)
-            ans++;
-    
-    cout << ans;
-}
+int32_t main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-int32_t main(){
-    #ifdef LOCAL
-    freopen(task".INP", "r", stdin);
-    freopen(task".OUT", "w", stdout);
-    #endif
+    if (fopen(task ".inp", "r")) {
+        freopen(task ".inp", "r", stdin);
+        freopen(task ".out", "w", stdout);
+    }
+    
+    // freopen(task ".inp", "r", stdin);
+    // freopen(task ".out", "w", stdout);
+
     logic();
+
+    return 0;
 }
+
+/*
+--/shouko\--
+DRAFT:
+------------
+*/

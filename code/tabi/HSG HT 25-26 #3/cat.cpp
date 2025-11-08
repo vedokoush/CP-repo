@@ -10,39 +10,46 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-// dont copy my flow dude
 #define task ""
 
-
 using namespace std;
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
+const int N = 505;
 const int inf = 1e18;
-const int mod = 1e9 + 7;
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
-int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int dp[N][N];
+int n, m;
 
 void logic() {
 
+    cin >> n >> m;
+
+    for (int a = 1; a <= n; a++) {
+        for (int b = 1; b <= m; b++) {
+            if (a == b) dp[a][b] = 0;
+            else {
+                dp[a][b] = inf;
+                for (int i = 1; i < a; i++) {
+                    dp[a][b] = min(dp[a][b], dp[i][b] + dp[a - i][b] + 1);
+                }
+                for (int j = 1; j < b; j++) {
+                    dp[a][b] = min(dp[a][b], dp[a][j] + dp[a][b - j] + 1);
+                }
+            }
+        }
+    }
+
+    cout << dp[n][m];
     // execute;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(0); cout.tie(0);
 
     if (fopen(task ".inp", "r")) {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
 
     logic();
 
@@ -51,6 +58,4 @@ int32_t main() {
 
 /*
 --/shouko\--
-DRAFT:
-------------
 */
