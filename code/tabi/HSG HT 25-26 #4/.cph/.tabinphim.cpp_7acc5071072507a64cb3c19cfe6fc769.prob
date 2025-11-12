@@ -1,0 +1,1 @@
+{"name":"Local: tabinphim","url":"/Users/shouko/Documents/workspaces/code/tabi/HSG HT 25-26 #4/tabinphim.cpp","tests":[{"id":1762784347957,"input":"4\n2 4 4\n3 6 6\n6 8 2\n5 7 3\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shouko/Documents/workspaces/code/tabi/HSG HT 25-26 #4/tabinphim.cpp","group":"local","local":true}
