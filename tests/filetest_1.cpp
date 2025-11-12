@@ -1,56 +1,67 @@
 #include <bits/stdc++.h>
 #define int long long
-#define all(v) v.begin(), v.end()
-#define ms(d,x) memset(d, x, sizeof(d))
-#define ii pair<int,int>
-#define iii pair<int,ii>
-#define fi first
-#define se second
-#define pb push_back
-#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
-#define shouko 1
-#define orz shouko
-// dont copy my flow dude
+#define range(i, l, r) for(int i = l; i <= r; ++i)
 #define task ""
-
-
 using namespace std;
 const int N = 1e6 + 9;
-const int M = 1e5 + 5;
-const int inf = 1e18;
-const int mod = 1e9 + 7;
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
-int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int n, m;
+int c;
+int pos, k, l, r;
+int tree[4 * N];
 
-void logic() {
-
-    // execute;
-}
-
-int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
+void build (int id, int l, int r, int pos, int val) {
+    /// pos [l r] pos
+    if (pos < l or pos > r) {
+        return;
     }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
-
-    logic();
-
-    return 0;
+    if (l == r) {
+        tree[id] += val;
+        return;
+    }
+    int mid = (l + r) / 2;
+    build(2 * id, l, mid, pos, val);
+    build(2 * id + 1, mid + 1, r, pos, val);
+    tree[id] = max(tree[2 * id], tree[2 * id + 1]);
 }
 
-/*
---/shouko\--
-DRAFT:
-------------
-*/
+
+int get(int id, int l, int r, int u, int v) {
+    /// [l r] [u v] [l r]
+    if (u > r or v < l) {
+        return -1e18;
+    }
+    /// [u l r v] 
+    if (l >= u and r <= v) {
+        return tree[id];
+    }
+    int mid = (l + r) / 2;
+    return max(get(2 * id, l, mid, u, v), 
+               get(2 * id + 1, mid + 1, r, u, v));
+}
+
+void solve(){
+    cin >> n >> m;
+    while (m--) {
+        cin >> c >> l >> r;
+        if (c == 0) {
+            build (1, 1, n, l, r);
+        }
+        else {
+            cout << get(1, 1, n, l, r) << '\n';
+        }
+    }
+}
+int32_t main(){
+    {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
+        if(fopen(task ".inp", "r"))
+        {
+            freopen(task ".inp", "r", stdin);
+            freopen(task ".out", "w", stdout);
+        }
+    }
+    solve();
+}
