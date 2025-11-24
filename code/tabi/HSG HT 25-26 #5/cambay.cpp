@@ -10,25 +10,46 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-// dont copy my flow dude
-#define task "JUMP"
-
+#define task ""
 
 using namespace std;
 const int N = 1e6 + 9;
 const int M = 1e5 + 5;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
+
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
-int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int a[N];
+bool m[N];
+int cnt[N], f[N];
 
 void logic() {
-    cout << 0;
-    // execute;
+    ms(cnt, 0);
+    ms(f, 0);
+
+    int n; 
+    cin >> n;
+
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        if (a[i] <= n) ++f[a[i]];
+    }
+
+    for (int x = 1; x <= n; ++x) {
+        if (f[x] == 0) continue;
+        for (int m = x; m <= n; m += x) {
+            cnt[m] += f[x];
+        }
+    }
+
+    int ans = 0;
+    for (int i = 1; i <= n; ++i) {
+        ans = max(ans, cnt[i]);
+    }
+
+    cout << ans << '\n';
 }
 
 int32_t main() {
@@ -40,17 +61,12 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
 
+    int t; cin >> t;
+    while (t--) {
     logic();
+    }
 
+    /// 
     return 0;
 }
-
-/*
---/shouko\--
-DRAFT:
-------------
-*/

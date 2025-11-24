@@ -11,7 +11,7 @@
 #define shouko 1
 #define orz shouko
 // dont copy my flow dude
-#define task "JUMP"
+#define task ""
 
 
 using namespace std;
@@ -26,8 +26,30 @@ int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
 
+int n;
+int a[N];
+long long pre[N];
+unordered_map<long long, int> f;
+int maxx = 0, l = -1, r = -1;
+
 void logic() {
-    cout << 0;
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        if (f.count(pre[i])) {
+            int len = i - f[pre[i]];
+            if (len > maxx) {
+                maxx = len;
+            }
+        }
+        else {
+            f[pre[i]] = i;
+        }
+    }
+    cout << maxx;
     // execute;
 }
 

@@ -10,8 +10,7 @@
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 #define shouko 1
 #define orz shouko
-// dont copy my flow dude
-#define task "JUMP"
+#define task ""
 
 
 using namespace std;
@@ -25,9 +24,41 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int n;
+int a[N];
+int mp[N];
+int maxx = -inf;
+int id;
+int cnt;
+vector<ii> vt;
 
 void logic() {
-    cout << 0;
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        ++mp[a[i]];
+    }
+    for (int i = 1; i <= n; ++i) {
+        // maxx = max(maxx, mp[a[i]]);
+        if (maxx <= mp[a[i]]) {
+            maxx = mp[a[i]];
+            id = a[i];
+        }
+    }
+    // cout << id;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i + 1; j <= n; ++j) {
+            if (a[i] == a[j] and a[i] == id) {
+                // cout << i << ' ' << j << '\n';
+                vt.pb({i, j});
+                ++cnt;
+            }
+        }
+    }
+    cout << cnt << '\n';
+    for (auto x : vt) {
+        cout << x.fi << ' ' << x.se << '\n';
+    }
     // execute;
 }
 
