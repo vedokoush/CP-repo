@@ -13,6 +13,7 @@
 // dont copy my flow dude
 #define task ""
 
+
 using namespace std;
 const int N = 1e6 + 9;
 const int M = 1e5 + 5;
@@ -24,28 +25,34 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-string s;
-int cnt;
-int f[N];
-int ans = inf;
+int n;
+int a[N], b[N];
+int k;
+int cnt = 0;
+
+
+ void ql(int i, int k, int sum) {
+     if (i > n) {
+         if (sum == k) {
+             ++cnt;
+         }
+     }
+     else {
+        b[i] = 0;
+        ql(i + 1, k, sum);
+
+        b[i] = 1;
+       ql(i + 1, k, sum + a[i]);
+     }
+ }
 
 void logic() {
-    cin >> s;
-    int l = 0;
-    for (int r = 0; r < (int)s.size(); ++r) {
-        int id = s[r] - 'A';
-        if (!f[id]) ++cnt;
-        ++f[id];
-
-        while (cnt == 26) {
-            ans = min(ans, r - l + 1);
-            int q = s[l] - 'A';
-            --f[q];
-            if (f[q] == 0) --cnt;
-            ++l;
-        }
+    cin >> n >> k;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
     }
-    cout << (ans == inf ? -1 : ans);
+    ql(1, k, 0);
+    cout << cnt;
     // execute;
 }
 
@@ -58,8 +65,12 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
+    
+    // freopen(task ".inp", "r", stdin);
+    // freopen(task ".out", "w", stdout);
 
     logic();
+
     return 0;
 }
 

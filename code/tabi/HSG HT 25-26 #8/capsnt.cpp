@@ -25,9 +25,38 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+bool f[N];
+int n;
+
+void sieve() {
+    ms(f, true);
+    f[0] = f[1] = false;
+    for (int i = 2; i * i <= N; ++i) {
+        if (f[i]) {
+            for (int j = i * i; j <= N; j += i) {
+                f[j] = false;
+            }
+        }
+    }
+}
 
 void logic() {
-
+    sieve();
+    cin >> n;
+    int k = 1;
+    while (f[n + k] == false) {
+        ++k;
+    }
+    for (int i = 1; i <= n; ++i) {
+        cout << i << ' ';
+    }
+    cout << '\n';
+    for (int i = k - 1; i >= 1; i--) {
+        cout << i << ' '; 
+    }
+    for (int i = n; i >= k; i--) {
+        cout << i << ' ';
+    }
     // execute;
 }
 

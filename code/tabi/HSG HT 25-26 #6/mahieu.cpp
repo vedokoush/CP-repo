@@ -25,9 +25,23 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int n;
+char f[N];
+
+bool cmp(string x, string y) {
+    return (x + y < y + x);
+}
 
 void logic() {
-
+    cin >> n;
+    vector<string> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+    sort (a.begin(), a.end(), cmp);
+    for (int i = 0; i < n; ++i) {
+        cout << a[i];
+    }
     // execute;
 }
 

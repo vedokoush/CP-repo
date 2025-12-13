@@ -7,10 +7,23 @@
 #define fi first
 #define se second
 #define pb push_back
+#define Is(mask, pos) (mask & (1LL << pos))
+#define On(mask, pos) (mask | (1LL << pos))
+#define Off(mask, pos) (mask ^ (1LL << pos))
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
-#define shouko 1
-#define orz shouko
-// dont copy my flow dude
+
+/*
+  .-')    ('-. .-.                          .-. .-')               
+ ( OO ). ( OO )  /                          \  ( OO )              
+(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----. 
+/    _ | |  | |  |( OO'  .-.  ' |  | |  |   |  .'   / ( OO'  .-.  '
+\  :` `. |   .|  |/   |  | |  | |  | | .-') |      /, /   |  | |  |
+ '..`''.)|       |\_) |  |\|  | |  |_|( OO )|     ' _)\_) |  |\|  |
+.-._)   \|  .-.  |  \ |  | |  | |  | | `-' /|  .   \    \ |  | |  |
+\       /|  | |  |   `'  '-'  '('  '-'(_.-' |  |\   \    `'  '-'  '
+ `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
+*/
+
 #define task ""
 
 
@@ -19,6 +32,7 @@ const int N = 1e6 + 9;
 const int M = 1e5 + 5;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
+const int base = 311;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 int add(int a, int b) {return (a + b) % mod;}
@@ -48,9 +62,3 @@ int32_t main() {
 
     return 0;
 }
-
-/*
---/shouko\--
-DRAFT:
-------------
-*/

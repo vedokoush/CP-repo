@@ -25,7 +25,6 @@ void btrack(int i, int n, bool check) {
     }
     else {
         for (int j = 0; j <= 1; ++j) {
-            if ()
             a[i] = j;
             btrack(i + 1, n);
         }

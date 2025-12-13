@@ -29,6 +29,17 @@ int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 void logic() {
 
     // execute;
+    cin >> n >> m;
+    for(int i=1; i<=n; i++)
+    cin >> a[i];
+    for(int i=1; i<=n; i++)
+    {
+        j = 1;
+        while(j > 0)
+        {
+            
+        }
+    }
 }
 
 int32_t main() {

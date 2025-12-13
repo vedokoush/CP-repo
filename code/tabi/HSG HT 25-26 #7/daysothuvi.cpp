@@ -25,11 +25,29 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int a[N];
+int dp[N];
+
 
 void logic() {
+    int n; 
+    cin >> n;
+    for (int i = 1; i <= n; ++i) cin >> a[i];
 
-    // execute;
+    int res = 0, len = 1;
+    for (int i = 2; i <= n; ++i) {
+        if (a[i] == a[i - 1]) len++;
+        else {
+            res += len / 2;
+            len = 1;
+        }
+    }
+    res += len / 2;
+
+    cout << res << '\n';
 }
+
+
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
@@ -44,7 +62,10 @@ int32_t main() {
     // freopen(task ".inp", "r", stdin);
     // freopen(task ".out", "w", stdout);
 
+    int t; cin >> t;
+    while (t--) {
     logic();
+    }
 
     return 0;
 }
@@ -52,5 +73,16 @@ int32_t main() {
 /*
 --/shouko\--
 DRAFT:
+
+dp[i]: so luong thao tac bien doi it nhat
+
+xét i:
+    th1: biến đổi
+        dp[i] = dp[i - 1] + 1
+    th2: không biến đổi
+        dp[i] = dp[i - 1]
+
+        hmm
+
 ------------
 */

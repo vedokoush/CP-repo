@@ -15,7 +15,7 @@
 
 
 using namespace std;
-const int N = 1e6 + 9;
+const int N = 1e3 + 9;
 const int M = 1e5 + 5;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
@@ -25,9 +25,25 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int a[N];
+int pre[N];
+int dp[N][N];
 
 void logic() {
-
+    int n; cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
+    }
+    for (int len = 2; len <= n; ++len) {
+        for (int i = 1; i + len - 1 <= n; ++i) {
+            dp[i][i + len - 1] = inf;
+            for (int j = 1; j < i + len - 1; ++j) {
+                dp[i][i + len - 1] = min(dp[i][i + len - 1], dp[i][j] + dp[j + 1][i + len - 1] + pre[i + len - 1] - pre[i-1]);
+            }
+        }
+    }
+    cout << dp[1][n];
     // execute;
 }
 
@@ -54,3 +70,5 @@ int32_t main() {
 DRAFT:
 ------------
 */
+
+

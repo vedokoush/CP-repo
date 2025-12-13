@@ -25,9 +25,55 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
+int n;
+int BIT[N];
+int l[N], r[N];
+int a[N], b[N];
+
+void update(int x, int val) {
+    for (; x <= n; x += x & -x) {
+        BIT[x] += val;
+    }
+}
+
+int query(int x) {
+    int ans = 0;
+    for (; x >= 1; x -= x & -x) {
+        ans += BIT[x];
+    }
+    return ans;
+}
 
 void logic() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        b[i] = a[i];
+    }
 
+    sort(b + 1, b + n + 1);
+    for (int i = 1; i <= n; i++) {
+        a[i] = lower_bound(b + 1, b + n + 1, a[i]) - b;
+    }
+
+    for (int j = 1; j <= n; ++j) {
+        l[j] = (j - 1) - query(a[j]);
+        update(a[j], 1);
+    }
+
+    ms(BIT, 0);
+
+    for (int j = n; j >= 1; --j) {
+        r[j] = query(a[j] - 1);
+        update(a[j], 1);
+    }
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans += l[i] * r[i];
+    }
+
+    cout << ans;
     // execute;
 }
 
