@@ -1,0 +1,1 @@
+{"name":"Local: doituyen","url":"/Users/shouko/Documents/workspaces/code/tabi/HSG HT 25-26 #6/doituyen.cpp","tests":[{"id":1764302589674,"input":"3\n2 4\n3 7\n4 2\n3 7 2 9\n5 7\n6 4 3 5 7\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shouko/Documents/workspaces/code/tabi/HSG HT 25-26 #6/doituyen.cpp","group":"local","local":true}
