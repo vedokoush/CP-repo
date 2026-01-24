@@ -8,23 +8,23 @@
 #define se second
 #define pb push_back
 #define Is(mask, pos) (mask & (1LL << pos))
-#define On(mask, pos) (mask | (1LL << pos))
+#define On(mask, pos) (mask  (1LL << pos))
 #define Off(mask, pos) (mask ^ (1LL << pos))
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 
 /*
-  .-')    ('-. .-.                          .-. .-')               
- ( OO ). ( OO )  /                          \  ( OO )              
-(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----. 
+  .-')    ('-. .-.                          .-. .-')
+ ( OO ). ( OO )  /                          \  ( OO )
+(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----.
 /    _ | |  | |  |( OO'  .-.  ' |  | |  |   |  .'   / ( OO'  .-.  '
 \  :` `. |   .|  |/   |  | |  | |  | | .-') |      /, /   |  | |  |
  '..`''.)|       |\_) |  |\|  | |  |_|( OO )|     ' _)\_) |  |\|  |
 .-._)   \|  .-.  |  \ |  | |  | |  | | `-' /|  .   \    \ |  | |  |
 \       /|  | |  |   `'  '-'  '('  '-'(_.-' |  |\   \    `'  '-'  '
- `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
+ `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'
 */
 
-#define task ""
+#define task "TAKEP"
 
 
 using namespace std;
@@ -38,41 +38,32 @@ int dy[] = {0, 1, 0, -1};
 int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
-
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
+int maxx = -inf, minn = inf;
+int ans;
+int n, k;
+int a[N];
+deque<int> mn, mx;
+int cnt;
 
 void logic() {
-    cin >> l >> r;
-    
-
-
+    cin >> n >> k;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    int l = 1;
+    for (int r = 1; r <= n; ++r) {
+        while (!mn.empty() and mn.back() > a[r]) mn.pop_back();
+        while (!mx.empty() and mx.back() < a[r]) mx.pop_back();
+        mx.pb(a[r]);
+        mn.pb(a[r]);
+        while (mx.front() - mn.front() > k) {
+            if (a[l] == mx.front()) mx.pop_front();
+            if (a[l] == mn.front()) mn.pop_front();
+            ++l;
+        }
+        ans += (r - l + 1);
+    }
+    cout << ans;
     // execute;
 }
 
@@ -85,7 +76,7 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
+
     // freopen(task ".inp", "r", stdin);
     // freopen(task ".out", "w", stdout);
 

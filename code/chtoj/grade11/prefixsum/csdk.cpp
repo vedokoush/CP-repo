@@ -24,7 +24,7 @@
  `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
 */
 
-#define task ""
+#define task "CSDK"
 
 
 using namespace std;
@@ -39,40 +39,20 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
+int n, k;
+int pre, ans;
+unordered_map<int, int> cnt;
 
 void logic() {
-    cin >> l >> r;
-    
-
-
+    cin >> n >> k;
+    cnt[0] = 1;
+    for (int i = 1; i <= n; ++i) {
+        int x; cin >> x;
+        pre += x;
+        ans += cnt[pre % k];
+        ++cnt[pre % k];
+    }
+    cout << ans;
     // execute;
 }
 

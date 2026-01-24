@@ -1,0 +1,1 @@
+{"name":"Local: SBOUND","url":"/home/shouko/Documents/CP-repo/code/chtoj/grade11/prefixsum/SBOUND.cpp","tests":[{"id":1768269984631,"input":"6 4 10\n1 2 3 4 5 6","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/shouko/Documents/CP-repo/code/chtoj/grade11/prefixsum/SBOUND.cpp","group":"local","local":true}

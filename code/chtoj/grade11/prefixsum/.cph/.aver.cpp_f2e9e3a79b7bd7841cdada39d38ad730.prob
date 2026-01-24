@@ -1,0 +1,1 @@
+{"name":"Local: aver","url":"/home/shouko/Documents/CP-repo/code/chtoj/grade11/prefixsum/aver.cpp","tests":[{"id":1768314787110,"input":"7 3\n1 5 2 3 1 4 1\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/shouko/Documents/CP-repo/code/chtoj/grade11/prefixsum/aver.cpp","group":"local","local":true}

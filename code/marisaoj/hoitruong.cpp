@@ -39,39 +39,43 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
+int n;
+ii a[N];
+int val[N];
+int dp[N];
+int nxt[N];
+int vt[N];
 
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
+int f(int i) {
+    if (i > n) return 0;
+    if (dp[i] != -1) return dp[i];
+    int res = f(i + 1);
+    res = max(res, val[i] + f(nxt[i]));
+    return dp[i] = res;
 }
 
-void l10() {
-    cout << "2 3 5 7\n";
+bool cmp(ii a, ii b) {
+    if (a.se == b.se) return a.fi < b.fi;
+    return a.se < b.se;
 }
 
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
 
 void logic() {
-    cin >> l >> r;
-    
-
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i].fi >> a[i].se;
+    }
+    sort (a + 1, a + n + 1, cmp);
+    for (int i = 1; i <= n; ++i) {
+        val[i] = a[i].se - a[i].fi + 1;
+        vt[i] = a[i].fi;
+    }
+    // sort (vt + 1, vt + n + 1);
+    for (int i = 1; i <= n; ++i) {
+        nxt[i] = upper_bound(vt + 1, vt + n + 1, a[i].se) - vt;
+    }
+    ms(dp, -1);
+    cout << f(1);
 
     // execute;
 }

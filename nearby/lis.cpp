@@ -8,23 +8,23 @@
 #define se second
 #define pb push_back
 #define Is(mask, pos) (mask & (1LL << pos))
-#define On(mask, pos) (mask | (1LL << pos))
+#define On(mask, pos) (mask  (1LL << pos))
 #define Off(mask, pos) (mask ^ (1LL << pos))
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 
 /*
-  .-')    ('-. .-.                          .-. .-')               
- ( OO ). ( OO )  /                          \  ( OO )              
-(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----. 
+  .-')    ('-. .-.                          .-. .-')
+ ( OO ). ( OO )  /                          \  ( OO )
+(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----.
 /    _ | |  | |  |( OO'  .-.  ' |  | |  |   |  .'   / ( OO'  .-.  '
 \  :` `. |   .|  |/   |  | |  | |  | | .-') |      /, /   |  | |  |
  '..`''.)|       |\_) |  |\|  | |  |_|( OO )|     ' _)\_) |  |\|  |
 .-._)   \|  .-.  |  \ |  | |  | |  | | `-' /|  .   \    \ |  | |  |
 \       /|  | |  |   `'  '-'  '('  '-'(_.-' |  |\   \    `'  '-'  '
- `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
+ `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'
 */
 
-#define task ""
+#define task "LIS"
 
 
 using namespace std;
@@ -36,40 +36,66 @@ const int base = 311;
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
-
-int n, x;
-int a[N];
-int pre[N];
-int ans;
-unordered_map<int, int> cnt;
-
-void logic() {
-    cin >> n >> x;
-    cnt[0] = 1;
+int mul(int avoid logic() {
+    cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
-        pre[i] = pre[i  - 1] + a[i];
-        ans += cnt[pre[i] - x];
-        cnt[pre[i]]++;
     }
-    cout << ans;
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = lower_bound(f + 1, f + dis + 1, a[i]) - f;
+        f[dp[i]] = a[i];
+        if (dp[i] > dis) ++dis;
+    }
+    cout << dis << '\n';
+    int minn = inf;
+    for (int i = n; i >= 1; i--) {
+        if (dp[i] == dis and a[i] < minn) {
+            pos.pb(i);
+            minn = a[i];
+            --dis;
+        }
+    }
+    reverse(pos.begin(), pos.end());
+    for (auto x : pos) {
+        cout << x << ' ';
+    }
+
+    // execute;
+}, int b) {return (a * b) % mod;}
+int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
+
+int n;
+int a[N], dp[N];
+int dis;
+int f[N];
+vector<int> pos;
+
+void logic() {
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = lower_bound(f + 1, f + dis + 1, a[i]) - f;
+        f[dp[i]] = a[i];
+        if (dp[i] > dis) ++dis;
+    }
+    cout << dis << '\n';
+    int minn = inf;
+    for (int i = n; i >= 1; i--) {
+        if (dp[i] == dis and a[i] < minn) {
+            pos.pb(i);
+            minn = a[i];
+            --dis;
+        }
+    }
+    reverse(pos.begin(), pos.end());
+    for (auto x : pos) {
+        cout << x << ' ';
+    }
+
     // execute;
 }
-
-/*
-
-a[i] + a[i + 1] + ... + a[j] = k
-
-pre[j] - pre[i - 1] = k
-
-pre[i - 1] = pre[j] - k
-
-pre[j] = k + pre[i - 1];
-
-
-*/
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
@@ -80,7 +106,7 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
+
     // freopen(task ".inp", "r", stdin);
     // freopen(task ".out", "w", stdout);
 

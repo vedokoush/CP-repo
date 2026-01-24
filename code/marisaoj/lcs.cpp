@@ -28,7 +28,7 @@
 
 
 using namespace std;
-const int N = 1e6 + 9;
+const int N = 1e3 + 9;
 const int M = 1e5 + 5;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
@@ -39,40 +39,27 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
+int a[N], b[N];
+int dp[N][N];
 
 void logic() {
-    cin >> l >> r;
-    
-
-
+    int n; cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        cin >> b[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            if (a[i - 1] == b[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    cout << dp[n][n];
     // execute;
 }
 

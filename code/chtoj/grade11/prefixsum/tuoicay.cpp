@@ -39,40 +39,62 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
+int n, m;
+int a[N], lazy[4 * N], tree[4 * N];
 
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
+void down(int id) {
+    if (lazy[id]) {  
+        int x = lazy[id];
+
+        lazy[id * 2] += x;
+        tree[id * 2] += x;
+
+        lazy[id * 2 + 1] += x;
+        tree[id * 2 + 1] += x;
+
+        lazy[id] = 0; 
     }
-    return true;
 }
 
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
+// a[u -> v] += val
+void update(int id, int l, int r, int u, int v, int val) {
+    if (l > v || r < u) {
+        return;
     }
-    cout << '\n';
+    if (l >= u && r <= v) {
+        tree[id] += val;
+        lazy[id] += val;
+        return;
+    }
+    int mid = (l + r) / 2;
+    down(id);
+    update(id * 2, l, mid, u, v, val);
+    update(id * 2 + 1, mid + 1, r, u, v, val);
+    tree[id] = max(tree[id * 2], tree[id * 2 + 1]);
 }
 
-void h100() {
-    
+int get(int id, int l, int r, int u, int v) {
+    if (u > r || v < l) {
+        return -1e18;
+    }
+    if (l >= u && r <= v) {
+        return tree[id];
+    }
+    int mid = (l + r) / 2;
+    down(id);
+    return max(get(2 * id, l, mid, u, v), 
+               get(2 * id + 1, mid + 1, r, u, v));
 }
 
 void logic() {
-    cin >> l >> r;
-    
-
-
+    cin >> n >> m;
+    while (m--) {
+        int l, r, k; cin >> l >> r >> k;
+        update(1, 1, n, l, r, k);
+    }
+    for (int i = 1; i <= n; ++i) {
+        cout << get(1, 1, n, i, i) << ' ';
+    }
     // execute;
 }
 

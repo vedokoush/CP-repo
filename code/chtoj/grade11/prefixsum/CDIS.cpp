@@ -24,7 +24,7 @@
  `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
 */
 
-#define task ""
+#define task "CDIS"
 
 
 using namespace std;
@@ -39,40 +39,19 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
+int n;
+int a[N];
+int pre[N];
 
 void logic() {
-    cin >> l >> r;
-    
-
-
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        cout << (i - 1) * a[i] - pre[i - 1] + (pre[n] - pre[i]) - (n - i) * a[i] << ' ';
+    }
     // execute;
 }
 

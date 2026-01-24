@@ -8,23 +8,23 @@
 #define se second
 #define pb push_back
 #define Is(mask, pos) (mask & (1LL << pos))
-#define On(mask, pos) (mask | (1LL << pos))
+#define On(mask, pos) (mask  (1LL << pos))
 #define Off(mask, pos) (mask ^ (1LL << pos))
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 
 /*
-  .-')    ('-. .-.                          .-. .-')               
- ( OO ). ( OO )  /                          \  ( OO )              
-(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----. 
+  .-')    ('-. .-.                          .-. .-')
+ ( OO ). ( OO )  /                          \  ( OO )
+(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----.
 /    _ | |  | |  |( OO'  .-.  ' |  | |  |   |  .'   / ( OO'  .-.  '
 \  :` `. |   .|  |/   |  | |  | |  | | .-') |      /, /   |  | |  |
  '..`''.)|       |\_) |  |\|  | |  |_|( OO )|     ' _)\_) |  |\|  |
 .-._)   \|  .-.  |  \ |  | |  | |  | | `-' /|  .   \    \ |  | |  |
 \       /|  | |  |   `'  '-'  '('  '-'(_.-' |  |\   \    `'  '-'  '
- `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
+ `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'
 */
 
-#define task ""
+#define task "CMOV"
 
 
 using namespace std;
@@ -39,39 +39,62 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
+int n, k;
+int dp[N];
 
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
+struct Matrix {
+    int a[3][3];
+};
+
+Matrix multiply(Matrix A, Matrix B) {
+    Matrix C{};
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            for (int t = 0; t < 3; ++t)
+                C.a[i][j] = (C.a[i][j] + A.a[i][t] * B.a[t][j]) % k;
+    return C;
+}
+
+Matrix power(Matrix A, int exp) {
+    Matrix res{};
+    for (int i = 0; i < 3; ++i) res.a[i][i] = 1;
+    while (exp) {
+        if (exp & 1) res = multiply(res, A);
+        A = multiply(A, A);
+        exp >>= 1;
     }
-    return true;
+    return res;
 }
 
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
+void sub2() {
+    dp[1] = 1;
+    dp[2] = 2;
+    dp[3] = 4;
+    for (int i = 4; i <= n; ++i) {
+        dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
+        dp[i] %= k;
     }
-    cout << '\n';
+    cout << dp[n];
 }
 
-void h100() {
-    
+void sub3() {
+    Matrix M{};
+    M.a[0][0] = 1; M.a[0][1] = 1; M.a[0][2] = 1;
+    M.a[1][0] = 1; M.a[1][1] = 0; M.a[1][2] = 0;
+    M.a[2][0] = 0; M.a[2][1] = 1; M.a[2][2] = 0;
+
+    Matrix P = power(M, n - 3);
+
+    int f3 = 4 % k, f2 = 2 % k, f1 = 1 % k;
+    int ans = (P.a[0][0] * f3 + P.a[0][1] * f2 + P.a[0][2] * f1) % k;
+    cout << ans;
 }
+
 
 void logic() {
-    cin >> l >> r;
-    
-
+    cin >> n >> k;
+    if (n <= 1000000) sub2();
+    else sub3();
 
     // execute;
 }
@@ -85,7 +108,7 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
+
     // freopen(task ".inp", "r", stdin);
     // freopen(task ".out", "w", stdout);
 

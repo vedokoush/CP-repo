@@ -8,23 +8,23 @@
 #define se second
 #define pb push_back
 #define Is(mask, pos) (mask & (1LL << pos))
-#define On(mask, pos) (mask | (1LL << pos))
+#define On(mask, pos) (mask  (1LL << pos))
 #define Off(mask, pos) (mask ^ (1LL << pos))
 #define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
 
 /*
-  .-')    ('-. .-.                          .-. .-')               
- ( OO ). ( OO )  /                          \  ( OO )              
-(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----. 
+  .-')    ('-. .-.                          .-. .-')
+ ( OO ). ( OO )  /                          \  ( OO )
+(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----.
 /    _ | |  | |  |( OO'  .-.  ' |  | |  |   |  .'   / ( OO'  .-.  '
 \  :` `. |   .|  |/   |  | |  | |  | | .-') |      /, /   |  | |  |
  '..`''.)|       |\_) |  |\|  | |  |_|( OO )|     ' _)\_) |  |\|  |
 .-._)   \|  .-.  |  \ |  | |  | |  | | `-' /|  .   \    \ |  | |  |
 \       /|  | |  |   `'  '-'  '('  '-'(_.-' |  |\   \    `'  '-'  '
- `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
+ `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'
 */
 
-#define task ""
+#define task "FIWO"
 
 
 using namespace std;
@@ -39,39 +39,36 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
+string s;
+int n;
+vector<string> v;
+deque<char> ans;
 
 void logic() {
-    cin >> l >> r;
-    
-
+    cin >> s;
+    for (auto x : s) {
+        if (x == '#') ++n;
+    }
+    while (n--) {
+        string t; cin >> t;
+        sort (t.begin(), t.end());
+        v.pb(t);
+    }
+    reverse(v.begin(), v.end());
+    int k; cin >> k;
+    k--;
+    for (auto x : v) {
+        ans.pb(x[k % x.size()]);
+        k /= x.size();
+    }
+    reverse(ans.begin(), ans.end());
+    for (auto y : s) {
+        if (y == '#') {
+            if (!ans.empty()) cout << ans.front();
+            ans.pop_front();
+        }
+        else cout << y;
+    }
 
     // execute;
 }
@@ -85,7 +82,7 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-    
+
     // freopen(task ".inp", "r", stdin);
     // freopen(task ".out", "w", stdout);
 
@@ -93,3 +90,26 @@ int32_t main() {
 
     return 0;
 }
+
+/*
+acqrswxy
+afhjnqsuvw
+bdejloux
+acejkrwxy
+1912
+
+
+1912 % 9 = 4 -> j
+1912 / 9 = 212
+
+212 % 8 = 5 -> l
+212 / 5 = 42
+
+42 % 8 = 2
+
+
+
+
+
+
+*/

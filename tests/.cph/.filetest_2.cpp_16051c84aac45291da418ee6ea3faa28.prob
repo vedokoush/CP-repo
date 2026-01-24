@@ -1,0 +1,1 @@
+{"name":"Local: filetest_2","url":"/home/shouko/Documents/CP-repo/tests/filetest_2.cpp","tests":[{"id":1768447748793,"input":"4 5\n1 4 -5 5","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/shouko/Documents/CP-repo/tests/filetest_2.cpp","group":"local","local":true}

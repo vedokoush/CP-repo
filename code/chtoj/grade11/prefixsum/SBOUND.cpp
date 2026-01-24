@@ -39,42 +39,60 @@ int add(int a, int b) {return (a + b) % mod;}
 int mul(int a, int b) {return (a * b) % mod;}
 int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
-        }
-    }
-    cout << '\n';
-}
-
-void h100() {
-    
-}
+int n, l, r;
+int a[N];
+int pre[N];
+int ans;
 
 void logic() {
-    cin >> l >> r;
-    
+    cin >> n >> l >> r;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
+    }
+    sort (pre, pre + n + 1);    
+    for (int j = 0; j <= n; ++j) {
+        int L = lower_bound(pre, pre + j, pre[j] - r) - pre;
+        int R = upper_bound(pre, pre + j, pre[j] - l) - pre;
+        ans += (R - L);
+    }
+    cout << ans;
 
+    // l <= pre[i] - pre[j] <= r
+    // pre[j] - r <= pre[i] <= pre[j] - l
 
-    // execute;
+    // multiset<long long> s;
+    // s.insert(0);
+
+    // for (int j = 1; j <= n; j++) {
+    //     ans += distance(
+    //         s.lower_bound(pre[j] - r),
+    //         s.upper_bound(pre[j] - l)
+    //     );
+    //     ans += distance(
+    //         s.lower_bound(pre[j] + l),
+    //         s.upper_bound(pre[j] + r)
+    //     );
+    //     s.insert(pre[j]);
+    // }
+    // cout << ans;
+    // execute
 }
+
+
+/*
+
+l <= abs(pre[j] - pre[i]) <= r
+
+th1: l <= pre[j] - pre[i] <= r
+-> pre[i] >= pre[j] - r
+-> pre[i] <= pre[j] - l
+
+th2: -l <= pre[j] - pre[i] <= -r
+-> pre[i] <= pre[j] + r
+-> pre[i] >= pre[j] + l
+
+*/
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
