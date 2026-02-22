@@ -1,95 +1,85 @@
 #include <bits/stdc++.h>
-#define int long long
-#define all(v) v.begin(), v.end()
-#define ms(d,x) memset(d, x, sizeof(d))
-#define ii pair<int,int>
-#define iii pair<int,ii>
-#define fi first
-#define se second
-#define pb push_back
-#define Is(mask, pos) (mask & (1LL << pos))
-#define On(mask, pos) (mask | (1LL << pos))
-#define Off(mask, pos) (mask ^ (1LL << pos))
-#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
-
-/*
-  .-')    ('-. .-.                          .-. .-')               
- ( OO ). ( OO )  /                          \  ( OO )              
-(_)---\_),--. ,--. .-'),-----.  ,--. ,--.   ,--. ,--.  .-'),-----. 
-/    _ | |  | |  |( OO'  .-.  ' |  | |  |   |  .'   / ( OO'  .-.  '
-\  :` `. |   .|  |/   |  | |  | |  | | .-') |      /, /   |  | |  |
- '..`''.)|       |\_) |  |\|  | |  |_|( OO )|     ' _)\_) |  |\|  |
-.-._)   \|  .-.  |  \ |  | |  | |  | | `-' /|  .   \    \ |  | |  |
-\       /|  | |  |   `'  '-'  '('  '-'(_.-' |  |\   \    `'  '-'  '
- `-----' `--' `--'     `-----'   `-----'    `--' '--'      `-----'                                                                        
-*/
-
-#define task ""
-
 
 using namespace std;
-const int N = 1e6 + 9;
-const int M = 1e5 + 5;
+
+const int N = 1e3 + 3;
 const int inf = 1e18;
-const int mod = 1e9 + 7;
-const int base = 311;
-int dx[] = {-1, 0, 1, 0};
+
+int n;
+int a[N][N];
+pair<int, int> start;
+int dist[N][N];
+queue<pair<int, int>> q;
+
+int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
-int add(int a, int b) {return (a + b) % mod;}
-int mul(int a, int b) {return (a * b) % mod;}
-int sub(int a, int b) {return ((a - b) % mod + mod) % mod;}
 
-int l, r;
-
-bool isPrime(long long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (long long i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-void l10() {
-    cout << "2 3 5 7\n";
-}
-
-void l99() {
-    for (int i = 1; i <= 9; i += 2) {
-        if (isPrime(i * 10 + i)) {
-            cout << i * 10 + i << ' ';
+void init(void) {
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            cin >> a[i][j];
         }
     }
-    cout << '\n';
+    start = {1, 1};
 }
 
-void h100() {
-    
+namespace subtask {
+    bool check() { return true; }
+    bool bfs(int d) {
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                dist[i][j] = inf;
+            }
+        }
+        dist[start.first][start.second] = 0;
+        q.push({start.first, start.second});
+        while (!q.empty()) {
+            int x = q.front().first;
+            int y = q.front().second;
+            q.pop();
+            for (int i = 0; i <= 3; ++i) {
+                int u = x + dx[i];
+                int v = y + dy[i];
+                if (u >= 1 and u <= n and v >= 1 and v <= n and (abs(a[x][y] - a[u][v]) <= d)) {
+                    if (dist[u][v] > dist[x][y] + 1) {
+                        dist[u][v] = dist[x][y] + 1;
+                        q.push({u, v});
+                    }
+                }
+            }
+        }
+        return dist[n][n] != inf;
+    }
+    void solve() {
+        int l = 1, r = inf, ans = -1;
+        while (l <= r) {
+            int mid = l + r >> 1;
+            if (bfs(mid) and dist[n][n] != inf) {
+                ans = mid;
+                r = mid - 1;
+            }
+            else l = mid + 1;
+        }
+        cout << ans;
+    }
 }
 
-void logic() {
-    cin >> l >> r;
-    
-
-
-    // execute;
-}
-
-int32_t main() {
+signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
-    }
-    
-    // freopen(task ".inp", "r", stdin);
-    // freopen(task ".out", "w", stdout);
-
-    logic();
-
-    return 0;
+    init();
+    if (subtask::check()) subtask::solve();
 }
+
+/*
+
+1
+2 3
+4 5 6
+7 8 9 10
+
+
+*/
